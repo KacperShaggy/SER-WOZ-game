@@ -1,0 +1,52 @@
+\doxysection{Ground\+Row.\+cs}
+\label{_ground_row_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/GroundRow.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/GroundRow.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }GroundRow\ :\ MonoBehaviour}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ nodeSize\ =\ 2f;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//wolalbym\ zeby\ to\ nie\ bylo\ public}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ speed\ =\ 5f;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{public}\ MapGenerating\ mapGenerating;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{private}\ Vector3\ startPosition;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ distanceTravelled\ =\ 0f;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ distanceToTravel;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{bool}\ createdComplete\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{comment}{//\ Start\ is\ called\ before\ the\ first\ frame\ update}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ startPosition\ =\ transform.position;}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{comment}{//\ Update\ is\ called\ once\ per\ frame}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{00071\ \ \ \ \ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ transform.Translate(Vector3.back\ *\ speed\ *\ Time.deltaTime);}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ distanceTravelled\ =\ Vector3.Distance(startPosition,\ transform.position);}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!createdComplete\ \&\&\ distanceTravelled\ >=\ nodeSize)}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ createdComplete\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//utworz\ nowy\ node}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ mapGenerating.CreateGroundRow();}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distanceTravelled\ >=\ distanceToTravel)}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(gameObject);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \}}
+
+\end{DoxyCode}

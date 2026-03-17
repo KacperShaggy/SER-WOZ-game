@@ -1,0 +1,222 @@
+\doxysection{Tower Class Reference}
+\label{class_tower}\index{Tower@{Tower}}
+
+
+Represents a defensive tower that detects enemies and shoots at them.  
+
+
+
+
+Inheritance diagram for Tower:\+
+% FIG 0
+
+
+Collaboration diagram for Tower:\+
+% FIG 1
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ range} = 10f
+\begin{DoxyCompactList}\small\item\em Maximum distance at which the tower can detect and target enemies. \end{DoxyCompactList}\item 
+float \textbf{ rotation\+Speed} = 5f
+\begin{DoxyCompactList}\small\item\em Speed at which the tower rotates toward its target. \end{DoxyCompactList}\item 
+float \textbf{ fire\+Rate} = 1f
+\begin{DoxyCompactList}\small\item\em Time between shots (shots per second logic). \end{DoxyCompactList}\item 
+Game\+Object \textbf{ bullet\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab of the bullet that will be fired. \end{DoxyCompactList}\item 
+Transform \textbf{ fire\+Point}
+\begin{DoxyCompactList}\small\item\em Transform representing the position where bullets are spawned. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\item 
+void \textbf{ Find\+Closest\+Enemy} ()
+\begin{DoxyCompactList}\small\item\em Finds the closest enemy within the tower\textquotesingle{}s range. \end{DoxyCompactList}\item 
+void \textbf{ Rotate\+Towards\+Target} ()
+\begin{DoxyCompactList}\small\item\em Rotates the tower smoothly toward the current target. \end{DoxyCompactList}\item 
+void \textbf{ Shoot} ()
+\begin{DoxyCompactList}\small\item\em Fires a bullet toward the current target. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Transform \textbf{ target}
+\begin{DoxyCompactList}\small\item\em Current enemy target. \end{DoxyCompactList}\item 
+float \textbf{ fire\+Countdown} = .\+5f
+\begin{DoxyCompactList}\small\item\em Countdown timer controlling the firing interval. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a defensive tower that detects enemies and shoots at them. 
+
+The tower continuously searches for the closest enemy within its range, rotates toward the target, and fires bullets at a specified rate. 
+
+Definition at line \textbf{ 13} of file \textbf{ Tower.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{Tower@{Tower}!FindClosestEnemy@{FindClosestEnemy}}
+\index{FindClosestEnemy@{FindClosestEnemy}!Tower@{Tower}}
+\doxysubsubsection{FindClosestEnemy()}
+{\footnotesize\ttfamily \label{class_tower_aced89200dc9ebeefa089491f950fa1bc} 
+void Tower.\+Find\+Closest\+Enemy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Finds the closest enemy within the tower\textquotesingle{}s range. 
+
+Searches all objects tagged as "{}\+Enemy"{} and selects the nearest one that is within the defined attack range. 
+
+Definition at line \textbf{ 80} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!RotateTowardsTarget@{RotateTowardsTarget}}
+\index{RotateTowardsTarget@{RotateTowardsTarget}!Tower@{Tower}}
+\doxysubsubsection{RotateTowardsTarget()}
+{\footnotesize\ttfamily \label{class_tower_aa8dd434a8716fc834f58dfbe7ac67453} 
+void Tower.\+Rotate\+Towards\+Target (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Rotates the tower smoothly toward the current target. 
+
+Uses Quaternion interpolation to gradually align the tower with the enemy\textquotesingle{}s position. 
+
+Definition at line \textbf{ 107} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!Shoot@{Shoot}}
+\index{Shoot@{Shoot}!Tower@{Tower}}
+\doxysubsubsection{Shoot()}
+{\footnotesize\ttfamily \label{class_tower_aa8f62f9dae4194a0f8d354e239e13baf} 
+void Tower.\+Shoot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Fires a bullet toward the current target. 
+
+Instantiates a bullet prefab at the fire point and sets its direction toward the enemy target. 
+
+Definition at line \textbf{ 122} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!Update@{Update}}
+\index{Update@{Update}!Tower@{Tower}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_tower_a41489230338a01a06ea1b2e4d8eb9e90} 
+void Tower.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Searches for the closest enemy, rotates the tower toward it, and fires bullets when the cooldown timer reaches zero. 
+
+Definition at line \textbf{ 56} of file \textbf{ Tower.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{Tower@{Tower}!bulletPrefab@{bulletPrefab}}
+\index{bulletPrefab@{bulletPrefab}!Tower@{Tower}}
+\doxysubsubsection{bulletPrefab}
+{\footnotesize\ttfamily \label{class_tower_aede00991f6364c35020bffe1fed3dc4a} 
+Game\+Object Tower.\+bullet\+Prefab}
+
+
+
+Prefab of the bullet that will be fired. 
+
+
+
+Definition at line \textbf{ 33} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!fireCountdown@{fireCountdown}}
+\index{fireCountdown@{fireCountdown}!Tower@{Tower}}
+\doxysubsubsection{fireCountdown}
+{\footnotesize\ttfamily \label{class_tower_a5d63d0c3eda08b29e09321b130604476} 
+float Tower.\+fire\+Countdown = .\+5f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Countdown timer controlling the firing interval. 
+
+
+
+Definition at line \textbf{ 48} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!firePoint@{firePoint}}
+\index{firePoint@{firePoint}!Tower@{Tower}}
+\doxysubsubsection{firePoint}
+{\footnotesize\ttfamily \label{class_tower_a2bb9d9887869c5a811722f3edb42cdf5} 
+Transform Tower.\+fire\+Point}
+
+
+
+Transform representing the position where bullets are spawned. 
+
+
+
+Definition at line \textbf{ 38} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!fireRate@{fireRate}}
+\index{fireRate@{fireRate}!Tower@{Tower}}
+\doxysubsubsection{fireRate}
+{\footnotesize\ttfamily \label{class_tower_a1d062ddd3c6d101938aee95d185e6a61} 
+float Tower.\+fire\+Rate = 1f}
+
+
+
+Time between shots (shots per second logic). 
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!range@{range}}
+\index{range@{range}!Tower@{Tower}}
+\doxysubsubsection{range}
+{\footnotesize\ttfamily \label{class_tower_aef20f2907d614d48af8a6b50960905bb} 
+float Tower.\+range = 10f}
+
+
+
+Maximum distance at which the tower can detect and target enemies. 
+
+
+
+Definition at line \textbf{ 18} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!rotationSpeed@{rotationSpeed}}
+\index{rotationSpeed@{rotationSpeed}!Tower@{Tower}}
+\doxysubsubsection{rotationSpeed}
+{\footnotesize\ttfamily \label{class_tower_a1f60aa55ff9286ef1b14f8b93b054eda} 
+float Tower.\+rotation\+Speed = 5f}
+
+
+
+Speed at which the tower rotates toward its target. 
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Tower.\+cs}.
+
+\index{Tower@{Tower}!target@{target}}
+\index{target@{target}!Tower@{Tower}}
+\doxysubsubsection{target}
+{\footnotesize\ttfamily \label{class_tower_a3fcbd671412b482827594c3bbbd4ca61} 
+Transform Tower.\+target\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current enemy target. 
+
+
+
+Definition at line \textbf{ 43} of file \textbf{ Tower.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Tower.\+cs}\end{DoxyCompactItemize}

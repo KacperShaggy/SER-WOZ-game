@@ -1,0 +1,199 @@
+\doxysection{Bullet Class Reference}
+\label{class_bullet}\index{Bullet@{Bullet}}
+
+
+Represents a projectile fired by a tower.  
+
+
+
+
+Inheritance diagram for Bullet:\+
+% FIG 0
+
+
+Collaboration diagram for Bullet:\+
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Set\+Direction\+To} (Transform \+\_\+target)
+\begin{DoxyCompactList}\small\item\em Sets the bullet direction toward a target transform. \end{DoxyCompactList}\item 
+void \textbf{ Set\+Direction} (Vector3 \+\_\+direction)
+\begin{DoxyCompactList}\small\item\em Sets the bullet movement direction manually. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ speed} = 8f
+\begin{DoxyCompactList}\small\item\em Movement speed of the bullet. \end{DoxyCompactList}\item 
+float \textbf{ damage} = 40f
+\begin{DoxyCompactList}\small\item\em Amount of damage dealt to an enemy on hit. \end{DoxyCompactList}\item 
+Vector3 \textbf{ direction}
+\begin{DoxyCompactList}\small\item\em Direction in which the bullet travels. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called when the bullet is created. \end{DoxyCompactList}\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\item 
+void \textbf{ Hit\+Target} (Game\+Object target)
+\begin{DoxyCompactList}\small\item\em Handles bullet collision with an enemy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a projectile fired by a tower. 
+
+The bullet moves in a specified direction and checks for collisions with enemies. When it detects an enemy within a certain distance, it deals damage and destroys itself. 
+
+Definition at line \textbf{ 13} of file \textbf{ Bullet.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{Bullet@{Bullet}!HitTarget@{HitTarget}}
+\index{HitTarget@{HitTarget}!Bullet@{Bullet}}
+\doxysubsubsection{HitTarget()}
+{\footnotesize\ttfamily \label{class_bullet_a67097eb3d3d469b55359aa402f0dbd59} 
+void Bullet.\+Hit\+Target (\begin{DoxyParamCaption}\item[{Game\+Object}]{target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Handles bullet collision with an enemy. 
+
+Retrieves the \doxyref{Enemy}{p.}{class_enemy} component from the target, applies damage, and destroys the bullet.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & The enemy Game\+Object that was hit. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 116} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!SetDirection@{SetDirection}}
+\index{SetDirection@{SetDirection}!Bullet@{Bullet}}
+\doxysubsubsection{SetDirection()}
+{\footnotesize\ttfamily \label{class_bullet_a23ed314a65aa661ae054f8b2b7f63930} 
+void Bullet.\+Set\+Direction (\begin{DoxyParamCaption}\item[{Vector3}]{\+\_\+direction}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the bullet movement direction manually. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+direction} & Vector representing the desired direction. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 49} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!SetDirectionTo@{SetDirectionTo}}
+\index{SetDirectionTo@{SetDirectionTo}!Bullet@{Bullet}}
+\doxysubsubsection{SetDirectionTo()}
+{\footnotesize\ttfamily \label{class_bullet_acef5c54baf03cc5d4be7b4f4a83f1442} 
+void Bullet.\+Set\+Direction\+To (\begin{DoxyParamCaption}\item[{Transform}]{\+\_\+target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the bullet direction toward a target transform. 
+
+Calculates a normalized direction vector from the bullet\textquotesingle{}s current position to the target position (on the XZ plane).
+
+
+\begin{DoxyParams}{Parameters}
+{\em \+\_\+target} & Transform of the target object. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 39} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!Start@{Start}}
+\index{Start@{Start}!Bullet@{Bullet}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_bullet_a4862c6392cf36c5c20f2ace5b1d8d484} 
+void Bullet.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called when the bullet is created. 
+
+Automatically destroys the bullet after 3 seconds to prevent unused objects from remaining in the scene. 
+
+Definition at line \textbf{ 60} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!Update@{Update}}
+\index{Update@{Update}!Bullet@{Bullet}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_bullet_ac6941e4e535a484e4b3a86b993633572} 
+void Bullet.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Moves the bullet forward and checks if any enemy is within a small distance. If an enemy is detected, the bullet damages the enemy and destroys itself. Retrieves all objects tagged as "{}\+Enemy"{}.
+
+Checks each enemy to see if it is within hit range.
+
+If the enemy is close enough, the bullet hits the target.
+
+Moves the bullet forward based on its direction and speed.
+
+Definition at line \textbf{ 72} of file \textbf{ Bullet.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{Bullet@{Bullet}!damage@{damage}}
+\index{damage@{damage}!Bullet@{Bullet}}
+\doxysubsubsection{damage}
+{\footnotesize\ttfamily \label{class_bullet_a7a07b8d87c70896760d578385d7c2eab} 
+float Bullet.\+damage = 40f}
+
+
+
+Amount of damage dealt to an enemy on hit. 
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!direction@{direction}}
+\index{direction@{direction}!Bullet@{Bullet}}
+\doxysubsubsection{direction}
+{\footnotesize\ttfamily \label{class_bullet_a3e2c779af8ba4b97394b3ae4be1404b5} 
+Vector3 Bullet.\+direction}
+
+
+
+Direction in which the bullet travels. 
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ Bullet.\+cs}.
+
+\index{Bullet@{Bullet}!speed@{speed}}
+\index{speed@{speed}!Bullet@{Bullet}}
+\doxysubsubsection{speed}
+{\footnotesize\ttfamily \label{class_bullet_a75e914c39a4154ced3d653ae44a05539} 
+float Bullet.\+speed = 8f}
+
+
+
+Movement speed of the bullet. 
+
+
+
+Definition at line \textbf{ 18} of file \textbf{ Bullet.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Bullet.\+cs}\end{DoxyCompactItemize}

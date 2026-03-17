@@ -1,48 +1,59 @@
-```csharp id = "z8r4tn"
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /**
  * @class Enemy
- * @brief Controls enemy behavior including movement, health, scaling, and death effects.
+ * @brief Represents an enemy unit that moves toward a target carriage.
  *
- * The enemy moves toward a target (carriage), gradually slows down as it loses health,
- * visually scales based on damage taken, and plays particle effects upon death.
+ * The enemy moves toward a specified target object, takes damage from bullets,
+ * scales visually based on remaining health, slows down when damaged,
+ * and plays particle effects upon death.
  */
 public class Enemy : MonoBehaviour
 {
-    /** @brief Particle system played when the enemy dies */
-    [SerializeField]
-    private ParticleSystem deathParticles;
+    /// <summary>
+    /// Particle system played when the enemy dies.
+    /// </summary>
+    [SerializeField] private ParticleSystem deathParticles;
 
-    /** @brief Current health of the enemy */
-    [SerializeField]
-    private float health = 100f;
+    /// <summary>
+    /// Current health of the enemy.
+    /// </summary>
+    public float health = 100f;
 
-    /** @brief Initial movement speed */
-    [SerializeField]
-    private float startingSpeed = 5f;
+    /// <summary>
+    /// Initial movement speed of the enemy.
+    /// </summary>
+    public float startingSpeed = 5f;
 
-    /** @brief Reference to the target object (carriage) */
-    [SerializeField]
-    private GameObject targetCarriage;
-
-    /** @brief Visual body of the enemy (used for scaling effect) */
-    [SerializeField]
-    private GameObject body;
-
-    /** @brief Current movement speed */
+    /// <summary>
+    /// Current movement speed (changes based on health).
+    /// </summary>
     private float speed;
 
-    /** @brief Initial scale of the body */
+    /// <summary>
+    /// Target object the enemy moves toward.
+    /// </summary>
+    public GameObject TestCariage;
+
+    /// <summary>
+    /// Visual body object used for scaling effects.
+    /// </summary>
+    public GameObject body;
+
+    /// <summary>
+    /// Original scale of the enemy body.
+    /// </summary>
     private Vector3 bodyStartSize;
 
     /**
-     * @brief Unity Start method.
+     * @brief Called when the enemy object is initialized.
      *
-     * Initializes speed and stores initial body scale.
+     * Stores the initial body scale and sets the starting speed.
      */
-    private void Start()
+    void Start()
     {
         bodyStartSize = body.transform.localScale;
         speed = startingSpeed;
@@ -51,37 +62,31 @@ public class Enemy : MonoBehaviour
     /**
      * @brief Called once per frame.
      *
-     * Handles movement toward the target and rotation.
+     * Moves the enemy toward the carriage, applies a constant backward
+     * drift, and rotates the enemy to face the target.
      */
-    private void Update()
+    void Update()
     {
-        if (targetCarriage == null) return;
+        //moving to cariage
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(TestCariage.transform.position.x, transform.position.y, TestCariage.transform.position.z), speed * Time.deltaTime);
+        transform.position += Vector3.back * 1f * Time.deltaTime; //znoszenie w dó³
 
-        Vector3 targetPosition = targetCarriage.transform.position;
+        var targetPosition = TestCariage.transform.position;
         targetPosition.y = transform.position.y;
-
-        // Move toward carriage
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            new Vector3(targetPosition.x, transform.position.y, targetPosition.z),
-            speed * Time.deltaTime
-        );
-
-        // Constant backward drift (optional effect)
-        transform.position += Vector3.back * Time.deltaTime;
-
-        // Rotate toward target
         transform.LookAt(targetPosition);
     }
 
     /**
-     * @brief Smoothly scales the enemy body over time.
+     * @brief Coroutine that smoothly scales the enemy body.
      *
-     * @param targetScale Target scale of the body
-     * @param duration Duration of the scaling animation
-     * @return IEnumerator for coroutine handling
+     * Gradually interpolates the body scale from its current size
+     * to the target scale over the specified duration.
+     *
+     * @param targetScale The desired scale of the enemy body.
+     * @param duration Duration of the scaling animation.
+     * @return IEnumerator Required for coroutine execution.
      */
-    private IEnumerator ScaleTween(Vector3 targetScale, float duration)
+    IEnumerator ScaleTween(Vector3 targetScale, float duration)
     {
         Vector3 startScale = body.transform.localScale;
         float time = 0f;
@@ -92,6 +97,7 @@ public class Enemy : MonoBehaviour
             float t = time / duration;
 
             body.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
+
             yield return null;
         }
 
@@ -99,78 +105,78 @@ public class Enemy : MonoBehaviour
     }
 
     /**
-     * @brief Applies damage to the enemy and updates its state.
+     * @brief Applies damage to the enemy.
      *
-     * Reduces health, scales the body visually, and slows movement.
-     * Triggers death if health reaches zero.
+     * Reduces health, scales the body depending on damage taken,
+     * slows movement speed, and triggers death if health reaches zero.
      *
-     * @param damage Amount of damage dealt
+     * @param damage Amount of damage dealt to the enemy.
      */
     public void TakeDamage(float damage)
     {
         health -= damage;
 
-        // Calculate scaling factor based on missing health
-        float factor = (100f - health) / 100f * 2f + 1f;
+        float factor = (100 - health) / 100f * 2 + 1;
 
         Vector3 targetScale = new Vector3(
             bodyStartSize.x * factor,
             bodyStartSize.y * factor,
-            bodyStartSize.z * factor
-        );
+            bodyStartSize.z * factor);
 
-        StartCoroutine(ScaleTween(targetScale, 0.3f));
+        StartCoroutine(ScaleTween(targetScale, 0.3f)); //skalowanie cia³a w zale¿noœci od zdrowia
 
-        // Reduce speed proportionally to health
-        speed = startingSpeed * Mathf.Clamp01(health / 100f);
+        speed = startingSpeed * (health / 100f); //zmniejszanie prêdkoœci w zale¿noœci od zdrowia
 
-        if (health <= 0f)
+        if (health <= 0)
         {
             Die();
         }
     }
 
     /**
-     * @brief Spawns and plays death particle effects.
+     * @brief Spawns and plays the death particle effect.
+     *
+     * Instantiates the particle system at the enemy's position
+     * and destroys it after its duration.
      */
-    private void EmitDeathParticles()
+    public void EmitDeathParticles()
     {
-        if (deathParticles == null) return;
+        //if (deathParticles == null) return;
 
         ParticleSystem ps = Instantiate(
-            deathParticles,
-            transform.position,
-            Quaternion.identity
-        );
+        deathParticles,
+        transform.position,
+        Quaternion.identity);
 
         ps.Play();
+
         Destroy(ps.gameObject, ps.main.duration);
     }
 
     /**
      * @brief Handles enemy death.
      *
-     * Plays effects and removes the enemy from the scene.
+     * Plays particle effects and removes the enemy from the scene.
      */
-    private void Die()
+    public void Die()
     {
         EmitDeathParticles();
         Destroy(gameObject);
     }
 
     /**
-     * @brief Unity collision callback.
+     * @brief Detects collisions with other objects.
      *
-     * Destroys the enemy when it reaches the target carriage.
+     * If the enemy collides with the carriage, it is destroyed.
      *
-     * @param collision Collision data
+     * @param collision Collision information provided by Unity.
      */
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == targetCarriage)
+        //destroying enemy when it reaches the cariage
+        if (collision.gameObject == TestCariage)
         {
             Destroy(gameObject);
         }
     }
 }
-```

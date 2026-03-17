@@ -1,47 +1,60 @@
-```csharp id = "m2x8qp"
 using UnityEngine;
 
 /**
  * @class GroundRow
- * @brief Controls movement and lifecycle of a ground segment.
+ * @brief Controls the movement and lifecycle of a ground row segment.
  *
- * The object moves backward over time, spawns a new ground row after
- * traveling a certain distance, and destroys itself after exceeding
- * a defined travel limit.
+ * The ground row moves backward continuously to simulate map movement.
+ * After travelling a certain distance, it triggers the creation of a new
+ * ground row and eventually destroys itself once it exceeds its lifetime distance.
  */
 public class GroundRow : MonoBehaviour
 {
-    /** @brief Size of a single ground node (distance before spawning next row) */
-    [SerializeField]
+    /// <summary>
+    /// Size of a single node in the ground grid.
+    /// Determines when the next row should be generated.
+    /// </summary>
     private float nodeSize = 2f;
 
-    /** @brief Movement speed of the ground row */
-    [SerializeField]
-    private float speed = 5f;
+    /// <summary>
+    /// Movement speed of the ground row.
+    /// </summary>
+    //wolalbym zeby to nie bylo public
+    public float speed = 5f;
 
-    /** @brief Reference to the map generator responsible for spawning new rows */
-    [SerializeField]
-    private MapGenerating mapGenerating;
+    /// <summary>
+    /// Reference to the map generator responsible for creating new rows.
+    /// </summary>
+    public MapGenerating mapGenerating;
 
-    /** @brief Maximum distance the row can travel before being destroyed */
-    [SerializeField]
-    private float distanceToTravel = 20f;
-
-    /** @brief Starting position of the row */
+    /// <summary>
+    /// Starting position of this ground row.
+    /// </summary>
     private Vector3 startPosition;
 
-    /** @brief Distance already traveled */
+    /// <summary>
+    /// Distance the ground row has travelled since spawning.
+    /// </summary>
     private float distanceTravelled = 0f;
 
-    /** @brief Flag to ensure new row is created only once */
-    private bool hasSpawnedNext = false;
+    /// <summary>
+    /// Maximum distance the ground row should travel before being destroyed.
+    /// </summary>
+    public float distanceToTravel;
+
+    /// <summary>
+    /// Flag indicating whether the next ground row has already been created.
+    /// Prevents multiple creations.
+    /// </summary>
+    private bool createdComplete = false;
 
     /**
-     * @brief Unity Start method.
+     * @brief Called once when the object is initialized.
      *
-     * Stores the initial position of the object.
+     * Stores the initial position of the ground row.
      */
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         startPosition = transform.position;
     }
@@ -49,33 +62,34 @@ public class GroundRow : MonoBehaviour
     /**
      * @brief Called once per frame.
      *
-     * Moves the row backward, tracks distance traveled,
-     * spawns a new row when needed, and destroys itself after exceeding the limit.
+     * Moves the ground row backwards, tracks the distance travelled,
+     * triggers creation of the next ground row when needed,
+     * and destroys this row after it travels beyond its allowed distance.
      */
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        // Move backward
         transform.Translate(Vector3.back * speed * Time.deltaTime);
 
-        // Calculate traveled distance
         distanceTravelled = Vector3.Distance(startPosition, transform.position);
 
-        // Spawn next row once
-        if (!hasSpawnedNext && distanceTravelled >= nodeSize)
+        /**
+         * @brief Creates a new ground row after travelling one node size.
+         */
+        if (!createdComplete && distanceTravelled >= nodeSize)
         {
-            hasSpawnedNext = true;
+            createdComplete = true;
 
-            if (mapGenerating != null)
-            {
-                mapGenerating.CreateGroundRow();
-            }
+            //utworz nowy node
+            mapGenerating.CreateGroundRow();
         }
 
-        // Destroy after exceeding max distance
+        /**
+         * @brief Destroys the ground row after exceeding its travel distance.
+         */
         if (distanceTravelled >= distanceToTravel)
         {
             Destroy(gameObject);
         }
     }
 }
-```

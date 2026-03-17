@@ -1,59 +1,71 @@
-```csharp id = "c4mv9k"
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /**
  * @class CameraMovement
- * @brief Handles back-and-forth camera movement along the Z axis.
+ * @brief Controls automatic back-and-forth camera movement.
  *
- * The camera moves forward by a specified distance, waits,
- * then returns to its starting position, repeating this loop indefinitely.
+ * The camera moves forward by a specified distance and then returns
+ * to its starting position. The movement repeats continuously with
+ * an optional pause between movements.
  */
 public class CameraMovement : MonoBehaviour
 {
-    /** @brief Distance (in Unity units) the camera moves forward */
-    [SerializeField]
-    private float distance = 1f;
+    /// <summary>
+    /// Distance the camera moves forward (in meters).
+    /// </summary>
+    public float distance = 1f;      // Odleg³oœæ ruchu (1 metr)
 
-    /** @brief Movement speed of the camera */
-    [SerializeField]
-    private float moveSpeed = 1f;
+    /// <summary>
+    /// Speed at which the camera moves.
+    /// </summary>
+    public float moveSpeed = 1f;     // Prêdkoœæ ruchu
 
-    /** @brief Time (in seconds) to wait between movements */
-    [SerializeField]
-    private float waitTime = 0f;
+    /// <summary>
+    /// Pause time between movements (in seconds).
+    /// </summary>
+    public float waitTime = 0f;    // Pauza miêdzy ruchami
 
-    /** @brief Initial position of the camera */
+    /// <summary>
+    /// Stores the initial position of the camera.
+    /// </summary>
     private Vector3 startPosition;
 
     /**
-     * @brief Unity Start method.
+     * @brief Called once when the object is initialized.
      *
-     * Stores the initial position and starts the movement coroutine.
+     * Saves the initial camera position and starts
+     * the camera movement coroutine.
      */
-    private void Start()
+    void Start()
     {
         startPosition = transform.position;
         StartCoroutine(MoveCamera());
     }
 
     /**
-     * @brief Main loop controlling camera movement.
+     * @brief Coroutine that continuously moves the camera forward and backward.
      *
-     * Moves the camera forward and backward with optional pauses.
+     * The camera moves forward by the specified distance, waits for a defined time,
+     * then returns to the starting position and waits again before repeating.
      *
-     * @return IEnumerator required for Unity coroutines
+     * @return IEnumerator Required for Unity coroutine execution.
      */
-    private IEnumerator MoveCamera()
+    IEnumerator MoveCamera()
     {
         while (true)
         {
-            // Move forward
-            yield return MoveToPosition(startPosition + new Vector3(0f, 0f, distance));
+            /// <summary>
+            /// Move the camera forward.
+            /// </summary>
+            yield return MoveToPosition(startPosition + new Vector3(0, 0, distance));
 
             yield return new WaitForSeconds(waitTime);
 
-            // Move back to start
+            /// <summary>
+            /// Move the camera back to the starting position.
+            /// </summary>
             yield return MoveToPosition(startPosition);
 
             yield return new WaitForSeconds(waitTime);
@@ -61,13 +73,19 @@ public class CameraMovement : MonoBehaviour
     }
 
     /**
-     * @brief Smoothly moves the camera to a target position.
+     * @brief Smoothly moves the camera toward a target position.
      *
-     * @param target Target world position
-     * @return IEnumerator required for Unity coroutines
+     * Uses Vector3.MoveTowards to gradually move the camera until
+     * it reaches the desired position.
+     *
+     * @param target Target position the camera should move to.
+     * @return IEnumerator Required for coroutine execution.
      */
-    private IEnumerator MoveToPosition(Vector3 target)
+    IEnumerator MoveToPosition(Vector3 target)
     {
+        /// <summary>
+        /// Continue moving until the camera is very close to the target.
+        /// </summary>
         while (Vector3.Distance(transform.position, target) > 0.01f)
         {
             transform.position = Vector3.MoveTowards(
@@ -79,8 +97,9 @@ public class CameraMovement : MonoBehaviour
             yield return null;
         }
 
-        // Snap exactly to target to avoid floating point inaccuracies
+        /// <summary>
+        /// Ensures the final position is exactly the target.
+        /// </summary>
         transform.position = target;
     }
 }
-```

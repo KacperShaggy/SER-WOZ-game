@@ -1,0 +1,112 @@
+\doxysection{Enemy.\+cs}
+\label{_enemy_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Enemy.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Enemy.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }System;}
+\DoxyCodeLine{00002\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{00004\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }Enemy\ :\ MonoBehaviour}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ [SerializeField]\ \textcolor{keyword}{private}\ ParticleSystem\ deathParticles;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ health\ =\ 100f;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ startingSpeed\ =\ 5f;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ speed;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ TestCariage;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ body;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{private}\ Vector3\ bodyStartSize;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{00057\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ bodyStartSize\ =\ body.transform.localScale;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ speed\ =\ startingSpeed;}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{00069\ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//moving\ to\ cariage}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ transform.position\ =\ Vector3.MoveTowards(transform.position,\ \textcolor{keyword}{new}\ Vector3(TestCariage.transform.position.x,\ transform.position.y,\ TestCariage.transform.position.z),\ speed\ *\ Time.deltaTime);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ transform.position\ +=\ Vector3.back\ *\ 1f\ *\ Time.deltaTime;\ \textcolor{comment}{//znoszenie\ w\ dó³}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ var\ targetPosition\ =\ TestCariage.transform.position;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ targetPosition.y\ =\ transform.position.y;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ transform.LookAt(targetPosition);}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00089\ \ \ \ \ IEnumerator\ ScaleTween(Vector3\ targetScale,\ \textcolor{keywordtype}{float}\ duration)}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ Vector3\ startScale\ =\ body.transform.localScale;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ time\ =\ 0f;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (time\ <\ duration)}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ time\ +=\ Time.deltaTime;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ t\ =\ time\ /\ duration;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ body.transform.localScale\ =\ Vector3.Lerp(startScale,\ targetScale,\ t);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ yield\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{null};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ body.transform.localScale\ =\ targetScale;}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ TakeDamage(\textcolor{keywordtype}{float}\ damage)}
+\DoxyCodeLine{00116\ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ health\ -\/=\ damage;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ factor\ =\ (100\ -\/\ health)\ /\ 100f\ *\ 2\ +\ 1;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ Vector3\ targetScale\ =\ \textcolor{keyword}{new}\ Vector3(}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ bodyStartSize.x\ *\ factor,}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ bodyStartSize.y\ *\ factor,}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ bodyStartSize.z\ *\ factor);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ StartCoroutine(ScaleTween(targetScale,\ 0.3f));\ \textcolor{comment}{//skalowanie\ cia³a\ w\ zale¿noœci\ od\ zdrowia}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ speed\ =\ startingSpeed\ *\ (health\ /\ 100f);\ \textcolor{comment}{//zmniejszanie\ prêdkoœci\ w\ zale¿noœci\ od\ zdrowia}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (health\ <=\ 0)}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ Die();}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ EmitDeathParticles()}
+\DoxyCodeLine{00143\ \ \ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (deathParticles\ ==\ null)\ return;}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ ParticleSystem\ ps\ =\ Instantiate(}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ deathParticles,}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ transform.position,}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ Quaternion.identity);}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ ps.Play();}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ Destroy(ps.gameObject,\ ps.main.duration);}
+\DoxyCodeLine{00154\ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ Die()}
+\DoxyCodeLine{00162\ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ EmitDeathParticles();}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ Destroy(gameObject);}
+\DoxyCodeLine{00165\ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{void}\ OnCollisionEnter(Collision\ collision)}
+\DoxyCodeLine{00175\ \ \ \ \ \{}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//destroying\ enemy\ when\ it\ reaches\ the\ cariage}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (collision.gameObject\ ==\ TestCariage)}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ Destroy(gameObject);}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,96 @@
+\doxysection{Map\+Generating.\+cs}
+\label{_map_generating_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/MapGenerating.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/MapGenerating.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{00002\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ }UnityEditor.Experimental.GraphView;}
+\DoxyCodeLine{00004\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }MapGenerating\ :\ MonoBehaviour}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ NodePrefab;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ RailsPrefab;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ RailsNodePrefab;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ NextToRailsPrefab;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ nodeSize\ =\ 2f;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{int}\ additionNodeOffset\ =\ 2;\ \textcolor{comment}{//\ Dodatkowe\ wêz³y\ po\ ka¿dej\ stronie,\ aby\ zapewniæ pe³ne\ pokrycie}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{comment}{//\ Start\ is\ called\ before\ the\ first\ frame\ update}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ CreateGroundRow();}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{private}\ Vector3\ PointFromCamera(Vector2\ camera2DPos)}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ Plane\ groundPlane\ =\ \textcolor{keyword}{new}\ Plane(Vector3.up,\ Vector3.zero);\ \textcolor{comment}{//\ Y\ =\ 0,\ to\ mog³o\ by\ byæ poza\ scopem}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ Ray\ ray\ =\ Camera.main.ViewportPointToRay(\textcolor{keyword}{new}\ Vector3(camera2DPos.x,\ camera2DPos.y,\ 0f));\ \textcolor{comment}{//\ lewy\ górny\ róg}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distance;}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (groundPlane.Raycast(ray,\ out\ distance))}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ Vector3\ hitPoint\ =\ ray.GetPoint(distance);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hitPoint;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Vector3.zero;}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{void}\ CreateGroundRow()}
+\DoxyCodeLine{00093\ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ WidthDistance\ =\ Vector3.Distance(PointFromCamera(\textcolor{keyword}{new}\ Vector2(0,\ 1)),\ PointFromCamera(\textcolor{keyword}{new}\ Vector2(1,\ 1)));}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ HeightDistance\ =\ Vector3.Distance(PointFromCamera(\textcolor{keyword}{new}\ Vector2(0,\ 0)),\ PointFromCamera(\textcolor{keyword}{new}\ Vector2(0,\ 1)));}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nodeNumber\ =\ (int)(WidthDistance\ /\ 2\ /\ nodeSize)\ +\ additionNodeOffset;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ nodeTravelDistnace\ =\ HeightDistance\ +\ 2\ *\ additionNodeOffset\ *\ nodeSize;}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ GameObject\ groundRow\ =\ \textcolor{keyword}{new}\ GameObject(\textcolor{stringliteral}{"{}GroundRow"{}});}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ GroundRow\ groundRowScript\ =\ groundRow.AddComponent<GroundRow>();}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ groundRowScript.speed\ =\ 5f;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ groundRowScript.mapGenerating\ =\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ groundRowScript.distanceToTravel\ =\ nodeTravelDistnace;}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ groundRow.transform.position\ =\ transform.position\ +\ \textcolor{keyword}{new}\ Vector3(0,\ 0,\ HeightDistance\ /\ 2\ +\ additionNodeOffset\ *\ nodeSize);}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ -\/nodeNumber;\ i\ <=\ nodeNumber;\ i++)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ GameObject\ node;}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ 0)}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ Instantiate(RailsNodePrefab,\ groundRow.transform.position\ +\ \textcolor{keyword}{new}\ Vector3(i\ *\ nodeSize,\ 0,\ 0),\ RailsNodePrefab.transform.rotation);}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (i\ ==\ -\/1\ ||\ i\ ==\ 1)}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rotation\ =\ 0;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ 1)}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rotation\ =\ 180;}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ Instantiate(NextToRailsPrefab,\ groundRow.transform.position\ +\ \textcolor{keyword}{new}\ Vector3(i\ *\ nodeSize,\ 0,\ 0),\ NextToRailsPrefab.transform.rotation\ *\ Quaternion.Euler(0f,\ 0f,\ rotation));}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ Instantiate(NodePrefab,\ groundRow.transform.position\ +\ \textcolor{keyword}{new}\ Vector3(i\ *\ nodeSize,\ 0,\ 0),\ NodePrefab.transform.rotation);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ node.transform.parent\ =\ groundRow.transform;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ GameObject\ rails\ =\ Instantiate(RailsPrefab);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ rails.transform.position\ =\ groundRow.transform.position\ +\ \textcolor{keyword}{new}\ Vector3(0,\ 1.1f,\ 0);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ rails.transform.parent\ =\ groundRow.transform;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ groundRow.transform.parent\ =\ transform;}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \}}
+
+\end{DoxyCode}

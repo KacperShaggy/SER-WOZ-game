@@ -1,0 +1,86 @@
+\doxysection{Tower.\+cs}
+\label{_tower_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Tower.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Tower.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }System;}
+\DoxyCodeLine{00002\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{00004\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }Tower\ :\ MonoBehaviour}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ range\ =\ 10f;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ rotationSpeed\ =\ 5f;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ fireRate\ =\ 1f;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ile\ strza³ów na\ sekundê}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ bulletPrefab;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ prefab\ pocisku}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{public}\ Transform\ firePoint;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ miejsce\ wystrza³u}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{private}\ Transform\ target;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{private}\ \textcolor{keywordtype}{float}\ fireCountdown\ =\ .5f;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{00057\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ FindClosestEnemy();}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (target\ !=\ \textcolor{keyword}{null})}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ RotateTowardsTarget();}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fireCountdown\ <=\ 0f)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Shoot();}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fireCountdown\ =\ .5f;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ fireCountdown\ -\/=\ Time.deltaTime;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ FindClosestEnemy()}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ GameObject[]\ enemies\ =\ GameObject.FindGameObjectsWithTag(\textcolor{stringliteral}{"{}Enemy"{}});}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ shortestDistance\ =\ Mathf.Infinity;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ GameObject\ nearestEnemy\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{foreach}\ (GameObject\ enemy\ \textcolor{keywordflow}{in}\ enemies)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ distanceToEnemy\ =\ Vector3.Distance(transform.position,\ enemy.transform.position);}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distanceToEnemy\ <\ shortestDistance\ \&\&\ distanceToEnemy\ <=\ range)}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shortestDistance\ =\ distanceToEnemy;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nearestEnemy\ =\ enemy;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ target\ =\ nearestEnemy\ !=\ \textcolor{keyword}{null}\ ?\ nearestEnemy.transform\ :\ \textcolor{keyword}{null};}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{void}\ RotateTowardsTarget()}
+\DoxyCodeLine{00108\ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ Vector3\ direction\ =\ target.position\ -\/\ transform.position;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ direction.y\ =\ 0f;}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ Quaternion\ lookRotation\ =\ Quaternion.LookRotation(direction);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ transform.rotation\ =\ Quaternion.Lerp(transform.rotation,\ lookRotation,\ Time.deltaTime\ *\ rotationSpeed);}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordtype}{void}\ Shoot()}
+\DoxyCodeLine{00123\ \ \ \ \ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ GameObject\ bullet\ =\ Instantiate(bulletPrefab,\ firePoint.position,\ firePoint.rotation);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ Bullet\ bulletScript\ =\ bullet.GetComponent<Bullet>();}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bulletScript\ !=\ \textcolor{keyword}{null})}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ bulletScript.SetDirectionTo(target);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ \}}
+
+\end{DoxyCode}

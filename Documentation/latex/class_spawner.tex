@@ -1,0 +1,161 @@
+\doxysection{Spawner Class Reference}
+\label{class_spawner}\index{Spawner@{Spawner}}
+
+
+Responsible for periodically spawning enemy units around the map.  
+
+
+
+
+Inheritance diagram for Spawner:\+
+% FIG 0
+
+
+Collaboration diagram for Spawner:\+
+% FIG 1
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Game\+Object \textbf{ Enemy\+To\+Spawn}
+\begin{DoxyCompactList}\small\item\em Prefab of the enemy that will be spawned. \end{DoxyCompactList}\item 
+float \textbf{ Radius} = 25
+\begin{DoxyCompactList}\small\item\em Radius of the spawning circle around the spawner. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ Test\+Cariage}
+\begin{DoxyCompactList}\small\item\em Target object that enemies will move toward. \end{DoxyCompactList}\item 
+float \textbf{ spawn\+Rate} = .\+5f
+\begin{DoxyCompactList}\small\item\em Time interval between enemy spawns. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called when the spawner is initialized. \end{DoxyCompactList}\item 
+void \textbf{ Spawn\+Enemy} ()
+\begin{DoxyCompactList}\small\item\em Spawns a new enemy at a random position around the spawner. \end{DoxyCompactList}\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Responsible for periodically spawning enemy units around the map. 
+
+This class spawns enemies at random positions on a circle around the spawner. Enemies appear either on the left or right side relative to the center and move toward the specified target carriage. 
+
+Definition at line \textbf{ 14} of file \textbf{ Spawner.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{Spawner@{Spawner}!SpawnEnemy@{SpawnEnemy}}
+\index{SpawnEnemy@{SpawnEnemy}!Spawner@{Spawner}}
+\doxysubsubsection{SpawnEnemy()}
+{\footnotesize\ttfamily \label{class_spawner_aa2a6fcbfa55fb896f58b5ba30a3952aa} 
+void Spawner.\+Spawn\+Enemy (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Spawns a new enemy at a random position around the spawner. 
+
+The enemy is spawned on a circular radius around the spawner, either to the left or right side, with a small random angle offset. After spawning, the enemy receives a reference to the target carriage. Chooses a base angle:\+ left (270°) or right (90°).
+
+Adds a random variation to the base angle.
+
+Calculates the spawn position on the circular radius.
+
+Instantiates the enemy and assigns its target.
+
+Definition at line \textbf{ 53} of file \textbf{ Spawner.\+cs}.
+
+\index{Spawner@{Spawner}!Start@{Start}}
+\index{Start@{Start}!Spawner@{Spawner}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_spawner_a886b14dc77cecd486d3c253d7e63df6e} 
+void Spawner.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called when the spawner is initialized. 
+
+Starts repeatedly spawning enemies at the specified spawn rate. 
+
+Definition at line \textbf{ 41} of file \textbf{ Spawner.\+cs}.
+
+\index{Spawner@{Spawner}!Update@{Update}}
+\index{Update@{Update}!Spawner@{Spawner}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_spawner_a2f7f8fac9da080bc7d54e63ada30cc4c} 
+void Spawner.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Currently unused but available for future logic. 
+
+Definition at line \textbf{ 89} of file \textbf{ Spawner.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{Spawner@{Spawner}!EnemyToSpawn@{EnemyToSpawn}}
+\index{EnemyToSpawn@{EnemyToSpawn}!Spawner@{Spawner}}
+\doxysubsubsection{EnemyToSpawn}
+{\footnotesize\ttfamily \label{class_spawner_af258e38dcbd8d528b8a0987df0dfc8e8} 
+Game\+Object Spawner.\+Enemy\+To\+Spawn}
+
+
+
+Prefab of the enemy that will be spawned. 
+
+
+
+Definition at line \textbf{ 19} of file \textbf{ Spawner.\+cs}.
+
+\index{Spawner@{Spawner}!Radius@{Radius}}
+\index{Radius@{Radius}!Spawner@{Spawner}}
+\doxysubsubsection{Radius}
+{\footnotesize\ttfamily \label{class_spawner_abbaf41d9699a4296faf8a3d9be3af333} 
+float Spawner.\+Radius = 25}
+
+
+
+Radius of the spawning circle around the spawner. 
+
+
+
+Definition at line \textbf{ 24} of file \textbf{ Spawner.\+cs}.
+
+\index{Spawner@{Spawner}!spawnRate@{spawnRate}}
+\index{spawnRate@{spawnRate}!Spawner@{Spawner}}
+\doxysubsubsection{spawnRate}
+{\footnotesize\ttfamily \label{class_spawner_af547f02848ce247ec0d18d9b45d3d3cd} 
+float Spawner.\+spawn\+Rate = .\+5f}
+
+
+
+Time interval between enemy spawns. 
+
+
+
+Definition at line \textbf{ 34} of file \textbf{ Spawner.\+cs}.
+
+\index{Spawner@{Spawner}!TestCariage@{TestCariage}}
+\index{TestCariage@{TestCariage}!Spawner@{Spawner}}
+\doxysubsubsection{TestCariage}
+{\footnotesize\ttfamily \label{class_spawner_aa4b40d9051f3623519f93e6b6731014e} 
+Game\+Object Spawner.\+Test\+Cariage}
+
+
+
+Target object that enemies will move toward. 
+
+
+
+Definition at line \textbf{ 29} of file \textbf{ Spawner.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Spawner.\+cs}\end{DoxyCompactItemize}

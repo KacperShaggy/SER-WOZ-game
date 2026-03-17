@@ -1,0 +1,217 @@
+\doxysection{Map\+Generating Class Reference}
+\label{class_map_generating}\index{MapGenerating@{MapGenerating}}
+
+
+Responsible for procedural generation of ground rows and map elements.  
+
+
+
+
+Inheritance diagram for Map\+Generating:\+
+% FIG 0
+
+
+Collaboration diagram for Map\+Generating:\+
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Create\+Ground\+Row} ()
+\begin{DoxyCompactList}\small\item\em Creates a new row of ground nodes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Game\+Object \textbf{ Node\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab used for standard ground nodes. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ Rails\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab containing the rail model. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ Rails\+Node\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab for the ground node located directly under the rails. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ Next\+To\+Rails\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab for nodes located next to the rails. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called when the map generator starts. \end{DoxyCompactList}\item 
+Vector3 \textbf{ Point\+From\+Camera} (Vector2 camera2\+DPos)
+\begin{DoxyCompactList}\small\item\em Converts a camera viewport position into a point on the ground plane. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ node\+Size} = 2f
+\begin{DoxyCompactList}\small\item\em Size of a single ground node. \end{DoxyCompactList}\item 
+int \textbf{ addition\+Node\+Offset} = 2
+\begin{DoxyCompactList}\small\item\em Additional nodes added on each side of the map to ensure full coverage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Responsible for procedural generation of ground rows and map elements. 
+
+This class dynamically creates rows of ground nodes based on the camera\textquotesingle{}s visible area. It ensures that the map continuously extends as rows move backward, creating an infinite scrolling environment. 
+
+Definition at line \textbf{ 14} of file \textbf{ Map\+Generating.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{MapGenerating@{MapGenerating}!CreateGroundRow@{CreateGroundRow}}
+\index{CreateGroundRow@{CreateGroundRow}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{CreateGroundRow()}
+{\footnotesize\ttfamily \label{class_map_generating_ab41d92b54fdec04ef05e6f73cbf8cebe} 
+void Map\+Generating.\+Create\+Ground\+Row (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new row of ground nodes. 
+
+Calculates the visible area of the camera and generates enough ground nodes to cover the width. Also places rails and special nodes in the center area. Creates a parent object for the generated ground row.
+
+Generates ground nodes across the width of the map.
+
+Special prefabs are used for nodes under the rails and next to them.
+
+Center node containing the rail base.
+
+Nodes located next to the rails.
+
+Standard ground node.
+
+Instantiates the rail model above the center node.
+
+Sets the generated row as a child of the map generator.
+
+Definition at line \textbf{ 92} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!PointFromCamera@{PointFromCamera}}
+\index{PointFromCamera@{PointFromCamera}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{PointFromCamera()}
+{\footnotesize\ttfamily \label{class_map_generating_ac8d55605b9d33270d1fc1972053c1b27} 
+Vector3 Map\+Generating.\+Point\+From\+Camera (\begin{DoxyParamCaption}\item[{Vector2}]{camera2\+DPos}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Converts a camera viewport position into a point on the ground plane. 
+
+Casts a ray from the camera through a viewport coordinate and finds the intersection with the ground plane (Y = 0).
+
+
+\begin{DoxyParams}{Parameters}
+{\em camera2\+DPos} & 2D viewport position (0–1 range). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Vector3 Position on the ground plane corresponding to the viewport point. 
+\end{DoxyReturn}
+Returns zero if the ray does not intersect the ground plane.
+
+Definition at line \textbf{ 66} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!Start@{Start}}
+\index{Start@{Start}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_map_generating_a29b0be5b2e5310c38331cb9ad40e7bf7} 
+void Map\+Generating.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called when the map generator starts. 
+
+Creates the initial ground row. 
+
+Definition at line \textbf{ 52} of file \textbf{ Map\+Generating.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{MapGenerating@{MapGenerating}!additionNodeOffset@{additionNodeOffset}}
+\index{additionNodeOffset@{additionNodeOffset}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{additionNodeOffset}
+{\footnotesize\ttfamily \label{class_map_generating_a2e94d931e83d3ebbeab2e981b0fa5d8b} 
+int Map\+Generating.\+addition\+Node\+Offset = 2\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Additional nodes added on each side of the map to ensure full coverage. 
+
+
+
+Definition at line \textbf{ 44} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!NextToRailsPrefab@{NextToRailsPrefab}}
+\index{NextToRailsPrefab@{NextToRailsPrefab}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{NextToRailsPrefab}
+{\footnotesize\ttfamily \label{class_map_generating_a21679fa2740b704d1d3cb339fc57ab98} 
+Game\+Object Map\+Generating.\+Next\+To\+Rails\+Prefab}
+
+
+
+Prefab for nodes located next to the rails. 
+
+
+
+Definition at line \textbf{ 34} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!NodePrefab@{NodePrefab}}
+\index{NodePrefab@{NodePrefab}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{NodePrefab}
+{\footnotesize\ttfamily \label{class_map_generating_a2f5b3c6771ba1b9b35cdee81e8951154} 
+Game\+Object Map\+Generating.\+Node\+Prefab}
+
+
+
+Prefab used for standard ground nodes. 
+
+
+
+Definition at line \textbf{ 19} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!nodeSize@{nodeSize}}
+\index{nodeSize@{nodeSize}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{nodeSize}
+{\footnotesize\ttfamily \label{class_map_generating_a823d4a10723102df826ecc484991215c} 
+float Map\+Generating.\+node\+Size = 2f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Size of a single ground node. 
+
+
+
+Definition at line \textbf{ 39} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!RailsNodePrefab@{RailsNodePrefab}}
+\index{RailsNodePrefab@{RailsNodePrefab}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{RailsNodePrefab}
+{\footnotesize\ttfamily \label{class_map_generating_a81765fd6e96e3130c923b6493d1576ff} 
+Game\+Object Map\+Generating.\+Rails\+Node\+Prefab}
+
+
+
+Prefab for the ground node located directly under the rails. 
+
+
+
+Definition at line \textbf{ 29} of file \textbf{ Map\+Generating.\+cs}.
+
+\index{MapGenerating@{MapGenerating}!RailsPrefab@{RailsPrefab}}
+\index{RailsPrefab@{RailsPrefab}!MapGenerating@{MapGenerating}}
+\doxysubsubsection{RailsPrefab}
+{\footnotesize\ttfamily \label{class_map_generating_a3779b6435544e010db6bcc81c505afb6} 
+Game\+Object Map\+Generating.\+Rails\+Prefab}
+
+
+
+Prefab containing the rail model. 
+
+
+
+Definition at line \textbf{ 24} of file \textbf{ Map\+Generating.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Map\+Generating.\+cs}\end{DoxyCompactItemize}

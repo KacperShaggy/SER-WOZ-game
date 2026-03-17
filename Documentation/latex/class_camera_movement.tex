@@ -1,0 +1,177 @@
+\doxysection{Camera\+Movement Class Reference}
+\label{class_camera_movement}\index{CameraMovement@{CameraMovement}}
+
+
+Controls automatic back-\/and-\/forth camera movement.  
+
+
+
+
+Inheritance diagram for Camera\+Movement:\+
+% FIG 0
+
+
+Collaboration diagram for Camera\+Movement:\+
+% FIG 1
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ distance} = 1f
+\begin{DoxyCompactList}\small\item\em Distance the camera moves forward (in meters). \end{DoxyCompactList}\item 
+float \textbf{ move\+Speed} = 1f
+\begin{DoxyCompactList}\small\item\em Speed at which the camera moves. \end{DoxyCompactList}\item 
+float \textbf{ wait\+Time} = 0f
+\begin{DoxyCompactList}\small\item\em Pause time between movements (in seconds). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called once when the object is initialized. \end{DoxyCompactList}\item 
+IEnumerator \textbf{ Move\+Camera} ()
+\begin{DoxyCompactList}\small\item\em Coroutine that continuously moves the camera forward and backward. \end{DoxyCompactList}\item 
+IEnumerator \textbf{ Move\+To\+Position} (Vector3 target)
+\begin{DoxyCompactList}\small\item\em Smoothly moves the camera toward a target position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Vector3 \textbf{ start\+Position}
+\begin{DoxyCompactList}\small\item\em Stores the initial position of the camera. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controls automatic back-\/and-\/forth camera movement. 
+
+The camera moves forward by a specified distance and then returns to its starting position. The movement repeats continuously with an optional pause between movements. 
+
+Definition at line \textbf{ 13} of file \textbf{ Camera\+Movement.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{CameraMovement@{CameraMovement}!MoveCamera@{MoveCamera}}
+\index{MoveCamera@{MoveCamera}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{MoveCamera()}
+{\footnotesize\ttfamily \label{class_camera_movement_a8b17b762137feec035b317f8cb39fb04} 
+IEnumerator Camera\+Movement.\+Move\+Camera (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Coroutine that continuously moves the camera forward and backward. 
+
+The camera moves forward by the specified distance, waits for a defined time, then returns to the starting position and waits again before repeating.
+
+\begin{DoxyReturn}{Returns}
+IEnumerator Required for Unity coroutine execution. 
+\end{DoxyReturn}
+Move the camera forward.
+
+Move the camera back to the starting position.
+
+Definition at line \textbf{ 55} of file \textbf{ Camera\+Movement.\+cs}.
+
+\index{CameraMovement@{CameraMovement}!MoveToPosition@{MoveToPosition}}
+\index{MoveToPosition@{MoveToPosition}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{MoveToPosition()}
+{\footnotesize\ttfamily \label{class_camera_movement_a61a077f19a22d3206f8e92f920b51250} 
+IEnumerator Camera\+Movement.\+Move\+To\+Position (\begin{DoxyParamCaption}\item[{Vector3}]{target}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Smoothly moves the camera toward a target position. 
+
+Uses Vector3.\+Move\+Towards to gradually move the camera until it reaches the desired position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & Target position the camera should move to. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+IEnumerator Required for coroutine execution. 
+\end{DoxyReturn}
+Continue moving until the camera is very close to the target.
+
+Ensures the final position is exactly the target.
+
+Definition at line \textbf{ 84} of file \textbf{ Camera\+Movement.\+cs}.
+
+\index{CameraMovement@{CameraMovement}!Start@{Start}}
+\index{Start@{Start}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_camera_movement_a3d5bf0407152d0e16efafa655bfc15e9} 
+void Camera\+Movement.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once when the object is initialized. 
+
+Saves the initial camera position and starts the camera movement coroutine. 
+
+Definition at line \textbf{ 41} of file \textbf{ Camera\+Movement.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{CameraMovement@{CameraMovement}!distance@{distance}}
+\index{distance@{distance}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{distance}
+{\footnotesize\ttfamily \label{class_camera_movement_a8b4245c72b3d27428ee291e67dceb13c} 
+float Camera\+Movement.\+distance = 1f}
+
+
+
+Distance the camera moves forward (in meters). 
+
+
+
+Definition at line \textbf{ 18} of file \textbf{ Camera\+Movement.\+cs}.
+
+\index{CameraMovement@{CameraMovement}!moveSpeed@{moveSpeed}}
+\index{moveSpeed@{moveSpeed}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{moveSpeed}
+{\footnotesize\ttfamily \label{class_camera_movement_a8a526b1cc50dd50efab2bf6ad4cf61df} 
+float Camera\+Movement.\+move\+Speed = 1f}
+
+
+
+Speed at which the camera moves. 
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Camera\+Movement.\+cs}.
+
+\index{CameraMovement@{CameraMovement}!startPosition@{startPosition}}
+\index{startPosition@{startPosition}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{startPosition}
+{\footnotesize\ttfamily \label{class_camera_movement_a76221097524e79bae0805f6ce9434a49} 
+Vector3 Camera\+Movement.\+start\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Stores the initial position of the camera. 
+
+
+
+Definition at line \textbf{ 33} of file \textbf{ Camera\+Movement.\+cs}.
+
+\index{CameraMovement@{CameraMovement}!waitTime@{waitTime}}
+\index{waitTime@{waitTime}!CameraMovement@{CameraMovement}}
+\doxysubsubsection{waitTime}
+{\footnotesize\ttfamily \label{class_camera_movement_a322759be6037274e4d47f473839169db} 
+float Camera\+Movement.\+wait\+Time = 0f}
+
+
+
+Pause time between movements (in seconds). 
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ Camera\+Movement.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Camera\+Movement.\+cs}\end{DoxyCompactItemize}

@@ -1,0 +1,67 @@
+\doxysection{Active\+Tower.\+cs}
+\label{_active_tower_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/ActiveTower.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/ActiveTower.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{00002\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00004\ \textcolor{keyword}{using\ }static\ UnityEngine.GraphicsBuffer;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }ActiveTower\ :\ MonoBehaviour}
+\DoxyCodeLine{00014\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ fireNumber\ =\ 100f;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ile\ strza³ów}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ fireRate\ =\ 0.1f;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ile\ strza³ów na\ sekundê}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ bulletPrefab;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ prefab\ pocisku}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{public}\ Transform\ firePoint;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ miejsce\ wystrza³u}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ Start\ is\ called\ before\ the\ first\ frame\ update}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00051\ \ \ \ \ Coroutine\ fireRoutine;}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{00060\ \ \ \ \ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (Input.GetKeyDown(KeyCode.Q)\ \&\&\ fireRoutine\ ==\ \textcolor{keyword}{null})}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ fireRoutine\ =\ StartCoroutine(FireLoop());}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//Sprinkler}}
+\DoxyCodeLine{00076\ \ \ \ \ IEnumerator\ FireLoop()}
+\DoxyCodeLine{00077\ \ \ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (count\ <\ fireNumber)}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 2;\ i++)\ \textcolor{comment}{//2\ bo\ na\ dwie\ storny}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GameObject\ bullet\ =\ Instantiate(bulletPrefab,\ firePoint.position,\ firePoint.rotation);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Bullet\ bulletScript\ =\ bullet.GetComponent<Bullet>();}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bulletScript\ !=\ \textcolor{keyword}{null})}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ angle\ =\ ((360f\ /\ fireNumber)\ +\ 180\ *\ i)\ *\ count\ *\ Mathf.Deg2Rad;\ \textcolor{comment}{//\ obliczanie\ k¹ta\ dla\ ka¿dego\ pocisku}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bulletScript.SetDirection(\textcolor{keyword}{new}\ Vector3(Mathf.Sin(angle),\ 0,\ Mathf.Cos(angle)));}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ yield\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ WaitForSeconds(fireRate);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ fireRoutine\ =\ \textcolor{keyword}{null};}
+\DoxyCodeLine{00123\ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \}}
+
+\end{DoxyCode}

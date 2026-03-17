@@ -1,0 +1,50 @@
+\doxysection{Spawner.\+cs}
+\label{_spawner_8cs_source}\index{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Spawner.cs@{C:/Users/Student.Administrator/Downloads/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/SER-\/WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/Assets/Scripts/Spawner.cs}}
+\textbf{ Go to the documentation of this file.}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{keyword}{using\ }System;}
+\DoxyCodeLine{00002\ \textcolor{keyword}{using\ }System.Collections;}
+\DoxyCodeLine{00003\ \textcolor{keyword}{using\ }System.Collections.Generic;}
+\DoxyCodeLine{00004\ \textcolor{keyword}{using\ }UnityEngine;}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{public}\ \textcolor{keyword}{class\ }Spawner\ :\ MonoBehaviour}
+\DoxyCodeLine{00015\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ EnemyToSpawn;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ Radius\ =\ 25;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{public}\ GameObject\ TestCariage;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{public}\ \textcolor{keywordtype}{float}\ spawnRate\ =\ .5f;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ Start()}
+\DoxyCodeLine{00042\ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ InvokeRepeating(nameof(SpawnEnemy),\ 0f,\ spawnRate);}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ SpawnEnemy()}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ baseAngle\ =\ (UnityEngine.Random.value\ <\ 0.5f)\ ?\ 90f\ :\ 270f;\ \textcolor{comment}{//\ prawo\ albo\ lewo}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ angle\ =\ baseAngle\ +\ UnityEngine.Random.Range(-\/40f,\ 40f);}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{float}\ rad\ =\ angle\ *\ Mathf.Deg2Rad;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ Vector3\ spawnPos\ =\ transform.position\ +\ \textcolor{keyword}{new}\ Vector3(}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ Mathf.Sin(rad)\ *\ Radius,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ 0,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ Mathf.Cos(rad)\ *\ Radius}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ GameObject\ newEnemy\ =\ Instantiate(EnemyToSpawn,\ spawnPos,\ Quaternion.identity);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ newEnemy.GetComponent<Enemy>().TestCariage\ =\ TestCariage;}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{comment}{//\ Update\ is\ called\ once\ per\ frame}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ Update()}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \}}
+
+\end{DoxyCode}

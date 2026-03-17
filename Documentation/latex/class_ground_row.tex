@@ -1,0 +1,192 @@
+\doxysection{Ground\+Row Class Reference}
+\label{class_ground_row}\index{GroundRow@{GroundRow}}
+
+
+Controls the movement and lifecycle of a ground row segment.  
+
+
+
+
+Inheritance diagram for Ground\+Row:\+
+% FIG 0
+
+
+Collaboration diagram for Ground\+Row:\+
+% FIG 1
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ speed} = 5f
+\begin{DoxyCompactList}\small\item\em Movement speed of the ground row. \end{DoxyCompactList}\item 
+\textbf{ Map\+Generating} \textbf{ map\+Generating}
+\begin{DoxyCompactList}\small\item\em Reference to the map generator responsible for creating new rows. \end{DoxyCompactList}\item 
+float \textbf{ distance\+To\+Travel}
+\begin{DoxyCompactList}\small\item\em Maximum distance the ground row should travel before being destroyed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called once when the object is initialized. \end{DoxyCompactList}\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ node\+Size} = 2f
+\begin{DoxyCompactList}\small\item\em Size of a single node in the ground grid. \end{DoxyCompactList}\item 
+Vector3 \textbf{ start\+Position}
+\begin{DoxyCompactList}\small\item\em Starting position of this ground row. \end{DoxyCompactList}\item 
+float \textbf{ distance\+Travelled} = 0f
+\begin{DoxyCompactList}\small\item\em Distance the ground row has travelled since spawning. \end{DoxyCompactList}\item 
+bool \textbf{ created\+Complete} = false
+\begin{DoxyCompactList}\small\item\em Flag indicating whether the next ground row has already been created. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controls the movement and lifecycle of a ground row segment. 
+
+The ground row moves backward continuously to simulate map movement. After travelling a certain distance, it triggers the creation of a new ground row and eventually destroys itself once it exceeds its lifetime distance. 
+
+Definition at line \textbf{ 11} of file \textbf{ Ground\+Row.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{GroundRow@{GroundRow}!Start@{Start}}
+\index{Start@{Start}!GroundRow@{GroundRow}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_ground_row_aaf29e1746fd961336ea0b6478957ed3e} 
+void Ground\+Row.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once when the object is initialized. 
+
+Stores the initial position of the ground row. 
+
+Definition at line \textbf{ 57} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!Update@{Update}}
+\index{Update@{Update}!GroundRow@{GroundRow}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_ground_row_ae6ff909a0977e1590237a476d39f7b79} 
+void Ground\+Row.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Moves the ground row backwards, tracks the distance travelled, triggers creation of the next ground row when needed, and destroys this row after it travels beyond its allowed distance. Creates a new ground row after travelling one node size.
+
+Destroys the ground row after exceeding its travel distance.
+
+Definition at line \textbf{ 70} of file \textbf{ Ground\+Row.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{GroundRow@{GroundRow}!createdComplete@{createdComplete}}
+\index{createdComplete@{createdComplete}!GroundRow@{GroundRow}}
+\doxysubsubsection{createdComplete}
+{\footnotesize\ttfamily \label{class_ground_row_ab447958e44e1bf91279b8e0cc6c1db61} 
+bool Ground\+Row.\+created\+Complete = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Flag indicating whether the next ground row has already been created. 
+
+Prevents multiple creations. 
+
+Definition at line \textbf{ 49} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!distanceToTravel@{distanceToTravel}}
+\index{distanceToTravel@{distanceToTravel}!GroundRow@{GroundRow}}
+\doxysubsubsection{distanceToTravel}
+{\footnotesize\ttfamily \label{class_ground_row_a66516691ea74c0f65ba1d516c0628ea8} 
+float Ground\+Row.\+distance\+To\+Travel}
+
+
+
+Maximum distance the ground row should travel before being destroyed. 
+
+
+
+Definition at line \textbf{ 43} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!distanceTravelled@{distanceTravelled}}
+\index{distanceTravelled@{distanceTravelled}!GroundRow@{GroundRow}}
+\doxysubsubsection{distanceTravelled}
+{\footnotesize\ttfamily \label{class_ground_row_a723880766ec2071a42c4c2552ae5035e} 
+float Ground\+Row.\+distance\+Travelled = 0f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Distance the ground row has travelled since spawning. 
+
+
+
+Definition at line \textbf{ 38} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!mapGenerating@{mapGenerating}}
+\index{mapGenerating@{mapGenerating}!GroundRow@{GroundRow}}
+\doxysubsubsection{mapGenerating}
+{\footnotesize\ttfamily \label{class_ground_row_adfa45fb3437a1e51fe136910df60ac3a} 
+\textbf{ Map\+Generating} Ground\+Row.\+map\+Generating}
+
+
+
+Reference to the map generator responsible for creating new rows. 
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!nodeSize@{nodeSize}}
+\index{nodeSize@{nodeSize}!GroundRow@{GroundRow}}
+\doxysubsubsection{nodeSize}
+{\footnotesize\ttfamily \label{class_ground_row_ab2c5b8189e6881e92cf1c09ffd2eeda5} 
+float Ground\+Row.\+node\+Size = 2f\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Size of a single node in the ground grid. 
+
+Determines when the next row should be generated. 
+
+Definition at line \textbf{ 17} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!speed@{speed}}
+\index{speed@{speed}!GroundRow@{GroundRow}}
+\doxysubsubsection{speed}
+{\footnotesize\ttfamily \label{class_ground_row_af32beb6f15b22cbbc4d42cff742e8e77} 
+float Ground\+Row.\+speed = 5f}
+
+
+
+Movement speed of the ground row. 
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Ground\+Row.\+cs}.
+
+\index{GroundRow@{GroundRow}!startPosition@{startPosition}}
+\index{startPosition@{startPosition}!GroundRow@{GroundRow}}
+\doxysubsubsection{startPosition}
+{\footnotesize\ttfamily \label{class_ground_row_ad4401c8003aaeda945c490414ac2de62} 
+Vector3 Ground\+Row.\+start\+Position\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Starting position of this ground row. 
+
+
+
+Definition at line \textbf{ 33} of file \textbf{ Ground\+Row.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Ground\+Row.\+cs}\end{DoxyCompactItemize}

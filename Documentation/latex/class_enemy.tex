@@ -1,0 +1,299 @@
+\doxysection{Enemy Class Reference}
+\label{class_enemy}\index{Enemy@{Enemy}}
+
+
+Represents an enemy unit that moves toward a target carriage.  
+
+
+
+
+Inheritance diagram for Enemy:\+
+% FIG 0
+
+
+Collaboration diagram for Enemy:\+
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Take\+Damage} (float damage)
+\begin{DoxyCompactList}\small\item\em Applies damage to the enemy. \end{DoxyCompactList}\item 
+void \textbf{ Emit\+Death\+Particles} ()
+\begin{DoxyCompactList}\small\item\em Spawns and plays the death particle effect. \end{DoxyCompactList}\item 
+void \textbf{ Die} ()
+\begin{DoxyCompactList}\small\item\em Handles enemy death. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ health} = 100f
+\begin{DoxyCompactList}\small\item\em Current health of the enemy. \end{DoxyCompactList}\item 
+float \textbf{ starting\+Speed} = 5f
+\begin{DoxyCompactList}\small\item\em Initial movement speed of the enemy. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ Test\+Cariage}
+\begin{DoxyCompactList}\small\item\em Target object the enemy moves toward. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ body}
+\begin{DoxyCompactList}\small\item\em Visual body object used for scaling effects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called when the enemy object is initialized. \end{DoxyCompactList}\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\item 
+IEnumerator \textbf{ Scale\+Tween} (Vector3 target\+Scale, float duration)
+\begin{DoxyCompactList}\small\item\em Coroutine that smoothly scales the enemy body. \end{DoxyCompactList}\item 
+void \textbf{ On\+Collision\+Enter} (Collision collision)
+\begin{DoxyCompactList}\small\item\em Detects collisions with other objects. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Particle\+System \textbf{ death\+Particles}
+\begin{DoxyCompactList}\small\item\em Particle system played when the enemy dies. \end{DoxyCompactList}\item 
+float \textbf{ speed}
+\begin{DoxyCompactList}\small\item\em Current movement speed (changes based on health). \end{DoxyCompactList}\item 
+Vector3 \textbf{ body\+Start\+Size}
+\begin{DoxyCompactList}\small\item\em Original scale of the enemy body. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents an enemy unit that moves toward a target carriage. 
+
+The enemy moves toward a specified target object, takes damage from bullets, scales visually based on remaining health, slows down when damaged, and plays particle effects upon death. 
+
+Definition at line \textbf{ 14} of file \textbf{ Enemy.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{Enemy@{Enemy}!Die@{Die}}
+\index{Die@{Die}!Enemy@{Enemy}}
+\doxysubsubsection{Die()}
+{\footnotesize\ttfamily \label{class_enemy_ac8eb629ba2895e86aa7f940334c94c02} 
+void Enemy.\+Die (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Handles enemy death. 
+
+Plays particle effects and removes the enemy from the scene. 
+
+Definition at line \textbf{ 161} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!EmitDeathParticles@{EmitDeathParticles}}
+\index{EmitDeathParticles@{EmitDeathParticles}!Enemy@{Enemy}}
+\doxysubsubsection{EmitDeathParticles()}
+{\footnotesize\ttfamily \label{class_enemy_abdbb61f5bb29e630ec99dac3324a422d} 
+void Enemy.\+Emit\+Death\+Particles (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Spawns and plays the death particle effect. 
+
+Instantiates the particle system at the enemy\textquotesingle{}s position and destroys it after its duration. 
+
+Definition at line \textbf{ 142} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!OnCollisionEnter@{OnCollisionEnter}}
+\index{OnCollisionEnter@{OnCollisionEnter}!Enemy@{Enemy}}
+\doxysubsubsection{OnCollisionEnter()}
+{\footnotesize\ttfamily \label{class_enemy_a1016ddcb428a3898518145c84aaa7eb4} 
+void Enemy.\+On\+Collision\+Enter (\begin{DoxyParamCaption}\item[{Collision}]{collision}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Detects collisions with other objects. 
+
+If the enemy collides with the carriage, it is destroyed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em collision} & Collision information provided by Unity. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 174} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!ScaleTween@{ScaleTween}}
+\index{ScaleTween@{ScaleTween}!Enemy@{Enemy}}
+\doxysubsubsection{ScaleTween()}
+{\footnotesize\ttfamily \label{class_enemy_a4948300197575953b46c403246892e86} 
+IEnumerator Enemy.\+Scale\+Tween (\begin{DoxyParamCaption}\item[{Vector3}]{target\+Scale}{, }\item[{float}]{duration}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Coroutine that smoothly scales the enemy body. 
+
+Gradually interpolates the body scale from its current size to the target scale over the specified duration.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Scale} & The desired scale of the enemy body. \\
+\hline
+{\em duration} & Duration of the scaling animation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+IEnumerator Required for coroutine execution. 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 89} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!Start@{Start}}
+\index{Start@{Start}!Enemy@{Enemy}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_enemy_ae3442338205f74a157f1a311640e84eb} 
+void Enemy.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called when the enemy object is initialized. 
+
+Stores the initial body scale and sets the starting speed. 
+
+Definition at line \textbf{ 56} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!TakeDamage@{TakeDamage}}
+\index{TakeDamage@{TakeDamage}!Enemy@{Enemy}}
+\doxysubsubsection{TakeDamage()}
+{\footnotesize\ttfamily \label{class_enemy_a3dc65712ca1e79c26e552e18d60c4c72} 
+void Enemy.\+Take\+Damage (\begin{DoxyParamCaption}\item[{float}]{damage}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Applies damage to the enemy. 
+
+Reduces health, scales the body depending on damage taken, slows movement speed, and triggers death if health reaches zero.
+
+
+\begin{DoxyParams}{Parameters}
+{\em damage} & Amount of damage dealt to the enemy. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 115} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!Update@{Update}}
+\index{Update@{Update}!Enemy@{Enemy}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_enemy_a80560cd7c04c1c0846715740bad699d1} 
+void Enemy.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Moves the enemy toward the carriage, applies a constant backward drift, and rotates the enemy to face the target. 
+
+Definition at line \textbf{ 68} of file \textbf{ Enemy.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{Enemy@{Enemy}!body@{body}}
+\index{body@{body}!Enemy@{Enemy}}
+\doxysubsubsection{body}
+{\footnotesize\ttfamily \label{class_enemy_a27080ecabf23cf624fa90a686e654398} 
+Game\+Object Enemy.\+body}
+
+
+
+Visual body object used for scaling effects. 
+
+
+
+Definition at line \textbf{ 44} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!bodyStartSize@{bodyStartSize}}
+\index{bodyStartSize@{bodyStartSize}!Enemy@{Enemy}}
+\doxysubsubsection{bodyStartSize}
+{\footnotesize\ttfamily \label{class_enemy_ad3a674b1cb464109100fe52d1d8e7854} 
+Vector3 Enemy.\+body\+Start\+Size\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Original scale of the enemy body. 
+
+
+
+Definition at line \textbf{ 49} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!deathParticles@{deathParticles}}
+\index{deathParticles@{deathParticles}!Enemy@{Enemy}}
+\doxysubsubsection{deathParticles}
+{\footnotesize\ttfamily \label{class_enemy_a2ccc524d48815f3a5f165ac058002dba} 
+Particle\+System Enemy.\+death\+Particles\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Particle system played when the enemy dies. 
+
+
+
+Definition at line \textbf{ 19} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!health@{health}}
+\index{health@{health}!Enemy@{Enemy}}
+\doxysubsubsection{health}
+{\footnotesize\ttfamily \label{class_enemy_ad884c92c058d7678876cb43fb852f213} 
+float Enemy.\+health = 100f}
+
+
+
+Current health of the enemy. 
+
+
+
+Definition at line \textbf{ 24} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!speed@{speed}}
+\index{speed@{speed}!Enemy@{Enemy}}
+\doxysubsubsection{speed}
+{\footnotesize\ttfamily \label{class_enemy_ad58edec05f9a44da44ef1021a4005d06} 
+float Enemy.\+speed\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Current movement speed (changes based on health). 
+
+
+
+Definition at line \textbf{ 34} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!startingSpeed@{startingSpeed}}
+\index{startingSpeed@{startingSpeed}!Enemy@{Enemy}}
+\doxysubsubsection{startingSpeed}
+{\footnotesize\ttfamily \label{class_enemy_a447cf8718dfec0c84e9b98492ee2741e} 
+float Enemy.\+starting\+Speed = 5f}
+
+
+
+Initial movement speed of the enemy. 
+
+
+
+Definition at line \textbf{ 29} of file \textbf{ Enemy.\+cs}.
+
+\index{Enemy@{Enemy}!TestCariage@{TestCariage}}
+\index{TestCariage@{TestCariage}!Enemy@{Enemy}}
+\doxysubsubsection{TestCariage}
+{\footnotesize\ttfamily \label{class_enemy_a4813c9dfacdc5bb6b037443f95eefd29} 
+Game\+Object Enemy.\+Test\+Cariage}
+
+
+
+Target object the enemy moves toward. 
+
+
+
+Definition at line \textbf{ 39} of file \textbf{ Enemy.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Enemy.\+cs}\end{DoxyCompactItemize}

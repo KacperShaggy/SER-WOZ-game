@@ -1,72 +1,93 @@
-```csharp id = "q7m2zs"
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /**
  * @class Spawner
- * @brief Handles spawning enemies around a central point in a randomized arc.
+ * @brief Responsible for periodically spawning enemy units around the map.
  *
- * Enemies are spawned at a fixed radius from the spawner, either on the left or right side,
- * with a slight random angle variation. Each spawned enemy is assigned a target (carriage).
+ * This class spawns enemies at random positions on a circle around the spawner.
+ * Enemies appear either on the left or right side relative to the center and
+ * move toward the specified target carriage.
  */
 public class Spawner : MonoBehaviour
 {
-    /** @brief Enemy prefab to spawn */
-    [SerializeField]
-    private GameObject enemyPrefab;
+    /// <summary>
+    /// Prefab of the enemy that will be spawned.
+    /// </summary>
+    public GameObject EnemyToSpawn;
 
-    /** @brief Distance from the spawner where enemies will appear */
-    [SerializeField]
-    private float spawnRadius = 25f;
+    /// <summary>
+    /// Radius of the spawning circle around the spawner.
+    /// </summary>
+    public float Radius = 25;
 
-    /** @brief Reference to the target object (carriage) */
-    [SerializeField]
-    private GameObject targetCarriage;
+    /// <summary>
+    /// Target object that enemies will move toward.
+    /// </summary>
+    public GameObject TestCariage;
 
-    /** @brief Time interval (in seconds) between enemy spawns */
-    [SerializeField]
-    private float spawnRate = 0.5f;
+    /// <summary>
+    /// Time interval between enemy spawns.
+    /// </summary>
+    public float spawnRate = .5f;
 
     /**
-     * @brief Unity Start method.
+     * @brief Called when the spawner is initialized.
      *
-     * Starts repeated enemy spawning.
+     * Starts repeatedly spawning enemies at the specified spawn rate.
      */
-    private void Start()
+    void Start()
     {
         InvokeRepeating(nameof(SpawnEnemy), 0f, spawnRate);
     }
 
     /**
-     * @brief Spawns a single enemy at a randomized position.
+     * @brief Spawns a new enemy at a random position around the spawner.
      *
-     * The enemy appears either on the left or right side of the spawner,
-     * with a random angular offset for variation.
+     * The enemy is spawned on a circular radius around the spawner,
+     * either to the left or right side, with a small random angle offset.
+     * After spawning, the enemy receives a reference to the target carriage.
      */
-    private void SpawnEnemy()
+    void SpawnEnemy()
     {
-        // Choose base direction: left (270°) or right (90°)
-        float baseAngle = (Random.value < 0.5f) ? 90f : 270f;
+        /// <summary>
+        /// Chooses a base angle: left (270°) or right (90°).
+        /// </summary>
+        float baseAngle = (UnityEngine.Random.value < 0.5f) ? 90f : 270f; // prawo albo lewo
 
-        // Add random spread
-        float angle = baseAngle + Random.Range(-40f, 40f);
-        float radians = angle * Mathf.Deg2Rad;
+        /// <summary>
+        /// Adds a random variation to the base angle.
+        /// </summary>
+        float angle = baseAngle + UnityEngine.Random.Range(-40f, 40f);
 
-        // Calculate spawn position
-        Vector3 spawnPosition = transform.position + new Vector3(
-            Mathf.Sin(radians) * spawnRadius,
-            0f,
-            Mathf.Cos(radians) * spawnRadius
+        float rad = angle * Mathf.Deg2Rad;
+
+        /// <summary>
+        /// Calculates the spawn position on the circular radius.
+        /// </summary>
+        Vector3 spawnPos = transform.position + new Vector3(
+            Mathf.Sin(rad) * Radius,
+            0,
+            Mathf.Cos(rad) * Radius
         );
 
-        // Instantiate enemy
-        GameObject enemyObject = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        /// <summary>
+        /// Instantiates the enemy and assigns its target.
+        /// </summary>
+        GameObject newEnemy = Instantiate(EnemyToSpawn, spawnPos, Quaternion.identity);
+        newEnemy.GetComponent<Enemy>().TestCariage = TestCariage;
+    }
 
-        // Assign target
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.SetTarget(targetCarriage);
-        }
+    /**
+     * @brief Called once per frame.
+     *
+     * Currently unused but available for future logic.
+     */
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
-```

@@ -1,119 +1,127 @@
-```csharp id = "n8x4vr"
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /**
  * @class Tower
- * @brief Controls targeting, rotation, and shooting behavior of a tower.
+ * @brief Represents a defensive tower that detects enemies and shoots at them.
  *
- * The tower searches for the closest enemy within range, rotates toward it,
- * and fires projectiles at a fixed rate.
+ * The tower continuously searches for the closest enemy within its range,
+ * rotates toward the target, and fires bullets at a specified rate.
  */
 public class Tower : MonoBehaviour
 {
-    /** @brief Maximum attack range */
-    [SerializeField]
-    private float range = 10f;
+    /// <summary>
+    /// Maximum distance at which the tower can detect and target enemies.
+    /// </summary>
+    public float range = 10f;
 
-    /** @brief Rotation speed toward target */
-    [SerializeField]
-    private float rotationSpeed = 5f;
+    /// <summary>
+    /// Speed at which the tower rotates toward its target.
+    /// </summary>
+    public float rotationSpeed = 5f;
 
-    /** @brief Shots per second */
-    [SerializeField]
-    private float fireRate = 1f;
+    /// <summary>
+    /// Time between shots (shots per second logic).
+    /// </summary>
+    public float fireRate = 1f;            // ile strza³ów na sekundê
 
-    /** @brief Bullet prefab */
-    [SerializeField]
-    private GameObject bulletPrefab;
+    /// <summary>
+    /// Prefab of the bullet that will be fired.
+    /// </summary>
+    public GameObject bulletPrefab;        // prefab pocisku
 
-    /** @brief Bullet spawn point */
-    [SerializeField]
-    private Transform firePoint;
+    /// <summary>
+    /// Transform representing the position where bullets are spawned.
+    /// </summary>
+    public Transform firePoint;            // miejsce wystrza³u
 
-    /** @brief Current target */
+    /// <summary>
+    /// Current enemy target.
+    /// </summary>
     private Transform target;
 
-    /** @brief Time remaining until next shot */
-    private float fireCountdown = 0f;
+    /// <summary>
+    /// Countdown timer controlling the firing interval.
+    /// </summary>
+    private float fireCountdown = .5f;
 
     /**
      * @brief Called once per frame.
      *
-     * Handles target acquisition, rotation, and shooting.
+     * Searches for the closest enemy, rotates the tower toward it,
+     * and fires bullets when the cooldown timer reaches zero.
      */
-    private void Update()
+    void Update()
     {
         FindClosestEnemy();
 
-        if (target == null) return;
-
-        RotateTowardsTarget();
-
-        if (fireCountdown <= 0f)
+        if (target != null)
         {
-            Shoot();
-            fireCountdown = 1f / fireRate; // FIX: proper fire rate usage
-        }
+            RotateTowardsTarget();
 
-        fireCountdown -= Time.deltaTime;
+            if (fireCountdown <= 0f)
+            {
+                Shoot();
+                fireCountdown = .5f;
+            }
+
+            fireCountdown -= Time.deltaTime;
+        }
     }
 
     /**
-     * @brief Finds the closest enemy within range.
+     * @brief Finds the closest enemy within the tower's range.
      *
-     * Searches all objects tagged as "Enemy" and selects the nearest one.
+     * Searches all objects tagged as "Enemy" and selects the nearest
+     * one that is within the defined attack range.
      */
-    private void FindClosestEnemy()
+    void FindClosestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         float shortestDistance = Mathf.Infinity;
-        Transform nearestTarget = null;
+        GameObject nearestEnemy = null;
 
         foreach (GameObject enemy in enemies)
         {
-            if (enemy == null) continue;
+            float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
 
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-
-            if (distance < shortestDistance && distance <= range)
+            if (distanceToEnemy < shortestDistance && distanceToEnemy <= range)
             {
-                shortestDistance = distance;
-                nearestTarget = enemy.transform;
+                shortestDistance = distanceToEnemy;
+                nearestEnemy = enemy;
             }
         }
 
-        target = nearestTarget;
+        target = nearestEnemy != null ? nearestEnemy.transform : null;
     }
 
     /**
-     * @brief Smoothly rotates the tower toward the current target.
+     * @brief Rotates the tower smoothly toward the current target.
+     *
+     * Uses Quaternion interpolation to gradually align the tower
+     * with the enemy's position.
      */
-    private void RotateTowardsTarget()
+    void RotateTowardsTarget()
     {
         Vector3 direction = target.position - transform.position;
         direction.y = 0f;
 
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-
-        transform.rotation = Quaternion.Lerp(
-            transform.rotation,
-            lookRotation,
-            Time.deltaTime * rotationSpeed
-        );
+        transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
     }
 
     /**
-     * @brief Spawns a bullet and directs it toward the target.
+     * @brief Fires a bullet toward the current target.
+     *
+     * Instantiates a bullet prefab at the fire point and
+     * sets its direction toward the enemy target.
      */
-    private void Shoot()
+    void Shoot()
     {
-        GameObject bullet = Instantiate(
-            bulletPrefab,
-            firePoint.position,
-            firePoint.rotation
-        );
-
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Bullet bulletScript = bullet.GetComponent<Bullet>();
 
         if (bulletScript != null)
@@ -122,4 +130,3 @@ public class Tower : MonoBehaviour
         }
     }
 }
-```

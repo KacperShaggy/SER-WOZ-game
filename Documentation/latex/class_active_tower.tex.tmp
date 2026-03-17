@@ -1,0 +1,191 @@
+\doxysection{Active\+Tower Class Reference}
+\label{class_active_tower}\index{ActiveTower@{ActiveTower}}
+
+
+Controls an active tower that fires bullets in a patterned sequence.  
+
+
+
+
+Inheritance diagram for Active\+Tower:\+
+% FIG 0
+
+
+Collaboration diagram for Active\+Tower:\+
+% FIG 1
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+float \textbf{ fire\+Number} = 100f
+\begin{DoxyCompactList}\small\item\em Maximum number of shots fired during one firing sequence. \end{DoxyCompactList}\item 
+float \textbf{ fire\+Rate} = 0.\+1f
+\begin{DoxyCompactList}\small\item\em Time delay between shots in seconds. \end{DoxyCompactList}\item 
+Game\+Object \textbf{ bullet\+Prefab}
+\begin{DoxyCompactList}\small\item\em Prefab of the bullet that will be instantiated when firing. \end{DoxyCompactList}\item 
+Transform \textbf{ fire\+Point}
+\begin{DoxyCompactList}\small\item\em Transform representing the point from which bullets are fired. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \textbf{ Start} ()
+\begin{DoxyCompactList}\small\item\em Called once when the object is initialized. \end{DoxyCompactList}\item 
+void \textbf{ Update} ()
+\begin{DoxyCompactList}\small\item\em Called once per frame. \end{DoxyCompactList}\item 
+IEnumerator \textbf{ Fire\+Loop} ()
+\begin{DoxyCompactList}\small\item\em Coroutine responsible for spawning bullets in a pattern. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Coroutine \textbf{ fire\+Routine}
+\begin{DoxyCompactList}\small\item\em Reference to the currently running firing coroutine. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Controls an active tower that fires bullets in a patterned sequence. 
+
+When the player presses the Q key, a coroutine starts that continuously spawns bullets in opposite directions, creating a sprinkler-\/like firing pattern. 
+
+Definition at line \textbf{ 13} of file \textbf{ Active\+Tower.\+cs}.
+
+
+
+\label{doc-func-members}
+\doxysubsection{Member Function Documentation}
+\index{ActiveTower@{ActiveTower}!FireLoop@{FireLoop}}
+\index{FireLoop@{FireLoop}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{FireLoop()}
+{\footnotesize\ttfamily \label{class_active_tower_adaf5cee87262db6efcf93b4d77dcfc78} 
+IEnumerator Active\+Tower.\+Fire\+Loop (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Coroutine responsible for spawning bullets in a pattern. 
+
+Bullets are spawned in two opposite directions. Each shot changes the angle, creating a rotating sprinkler-\/like firing pattern.
+
+\begin{DoxyReturn}{Returns}
+IEnumerator Required for Unity coroutine execution. 
+\end{DoxyReturn}
+Loop generating bullets until the maximum number of shots is reached.
+
+Creates two bullets fired in opposite directions.
+
+Calculates the firing angle for the bullet.
+
+The angle depends on the current shot number and determines the direction in which the bullet will travel.
+
+Sets the movement direction of the bullet.
+
+Waits for the specified fire\+Rate before spawning the next bullets.
+
+Resets the coroutine reference after the firing sequence finishes.
+
+Definition at line \textbf{ 76} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!Start@{Start}}
+\index{Start@{Start}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{Start()}
+{\footnotesize\ttfamily \label{class_active_tower_a15673d603ea4f83a3710cb42d0757ee1} 
+void Active\+Tower.\+Start (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once when the object is initialized. 
+
+Currently unused but can be used for initialization logic. 
+
+Definition at line \textbf{ 42} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!Update@{Update}}
+\index{Update@{Update}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{Update()}
+{\footnotesize\ttfamily \label{class_active_tower_a33284c9a1a02ecb310b2c82869508b9a} 
+void Active\+Tower.\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Called once per frame. 
+
+Detects when the Q key is pressed. If no firing coroutine is active, it starts the Fire\+Loop coroutine. 
+
+Definition at line \textbf{ 59} of file \textbf{ Active\+Tower.\+cs}.
+
+
+
+\label{doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\index{ActiveTower@{ActiveTower}!bulletPrefab@{bulletPrefab}}
+\index{bulletPrefab@{bulletPrefab}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{bulletPrefab}
+{\footnotesize\ttfamily \label{class_active_tower_ad8d81a1f0cd016b0fb7cc02985335582} 
+Game\+Object Active\+Tower.\+bullet\+Prefab}
+
+
+
+Prefab of the bullet that will be instantiated when firing. 
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!fireNumber@{fireNumber}}
+\index{fireNumber@{fireNumber}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{fireNumber}
+{\footnotesize\ttfamily \label{class_active_tower_a26d73d2068d7d566571bd0c24dee2614} 
+float Active\+Tower.\+fire\+Number = 100f}
+
+
+
+Maximum number of shots fired during one firing sequence. 
+
+
+
+Definition at line \textbf{ 18} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!firePoint@{firePoint}}
+\index{firePoint@{firePoint}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{firePoint}
+{\footnotesize\ttfamily \label{class_active_tower_a7b90c90037142f5ada3a30ca1325b0b4} 
+Transform Active\+Tower.\+fire\+Point}
+
+
+
+Transform representing the point from which bullets are fired. 
+
+
+
+Definition at line \textbf{ 33} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!fireRate@{fireRate}}
+\index{fireRate@{fireRate}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{fireRate}
+{\footnotesize\ttfamily \label{class_active_tower_a113a89e9c959068b1a621fc710b60f90} 
+float Active\+Tower.\+fire\+Rate = 0.\+1f}
+
+
+
+Time delay between shots in seconds. 
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Active\+Tower.\+cs}.
+
+\index{ActiveTower@{ActiveTower}!fireRoutine@{fireRoutine}}
+\index{fireRoutine@{fireRoutine}!ActiveTower@{ActiveTower}}
+\doxysubsubsection{fireRoutine}
+{\footnotesize\ttfamily \label{class_active_tower_a6333a31cbd1d0327841d191995325f0b} 
+Coroutine Active\+Tower.\+fire\+Routine\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Reference to the currently running firing coroutine. 
+
+Prevents multiple firing routines from running simultaneously. 
+
+Definition at line \textbf{ 51} of file \textbf{ Active\+Tower.\+cs}.
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+C:\+/\+\+Users/\+\+Student.\+Administrator/\+\+Downloads/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+SER-\/\+WOZ-\/game-\/d87b2e636f6fc56ca3a8ab120e1b3c64ba96c7a5/\+\+Assets/\+\+Scripts/\+\textbf{ Active\+Tower.\+cs}\end{DoxyCompactItemize}
