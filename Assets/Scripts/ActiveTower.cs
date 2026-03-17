@@ -1,57 +1,95 @@
+```csharp
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
+/**
+ * @class ActiveTower
+ * @brief Controls an active tower that fires bullets in a circular "sprinkler" pattern.
+ *
+ * When the user presses the Q key, the tower starts firing bullets over time.
+ * Bullets are evenly distributed in a circular pattern and fired in two opposite directions.
+ */
 public class ActiveTower : MonoBehaviour
 {
-    public float fireNumber = 100f;            // ile strza³ów
-    public float fireRate = 0.1f;            // ile strza³ów na sekundê
-    public GameObject bulletPrefab;        // prefab pocisku
-    public Transform firePoint;            // miejsce wystrza³u
+    /** @brief Total number of bullets fired in one sequence */
+    [SerializeField]
+    private float fireNumber = 100f;
 
+    /** @brief Time delay (in seconds) between shots */
+    [SerializeField]
+    private float fireRate = 0.1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    /** @brief Bullet prefab to instantiate */
+    [SerializeField]
+    private GameObject bulletPrefab;
 
-    }
+    /** @brief Transform representing the firing position */
+    [SerializeField]
+    private Transform firePoint;
 
-    Coroutine fireRoutine;
+    /** @brief Reference to the currently running firing coroutine */
+    private Coroutine fireRoutine;
 
-    void Update()
+    /**
+     * @brief Called once per frame.
+     *
+     * Listens for Q key press and starts the firing coroutine
+     * if it is not already running.
+     */
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q) && fireRoutine == null)
         {
             fireRoutine = StartCoroutine(FireLoop());
         }
     }
-    //Sprinkler
-    IEnumerator FireLoop()
+
+    /**
+     * @brief Main firing loop for the sprinkler pattern.
+     *
+     * Spawns bullets at fixed intervals and assigns their direction
+     * based on a calculated angle. Each step fires bullets in two opposite directions.
+     *
+     * @return IEnumerator required for Unity coroutines
+     */
+    private IEnumerator FireLoop()
     {
         int count = 0;
+
         while (count < fireNumber)
         {
             count++;
 
-            for (int i = 0; i < 2; i++) //2 bo na dwie storny
+            // Fire in two opposite directions
+            for (int i = 0; i < 2; i++)
             {
-                GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                GameObject bullet = Instantiate(
+                    bulletPrefab,
+                    firePoint.position,
+                    firePoint.rotation
+                );
+
                 Bullet bulletScript = bullet.GetComponent<Bullet>();
 
                 if (bulletScript != null)
                 {
-                    float angle = ((360f / fireNumber) + 180*i) * count * Mathf.Deg2Rad; // obliczanie k¹ta dla ka¿dego pocisku
-                    bulletScript.SetDirection(new Vector3(Mathf.Sin(angle), 0, Mathf.Cos(angle)));
-                }
-            
-            }
+                    // Calculate angle for current bullet
+                    float angle = ((360f / fireNumber) + 180f * i) * count * Mathf.Deg2Rad;
 
-               
-            
+                    Vector3 direction = new Vector3(
+                        Mathf.Sin(angle),
+                        0f,
+                        Mathf.Cos(angle)
+                    );
+
+                    bulletScript.SetDirection(direction);
+                }
+            }
 
             yield return new WaitForSeconds(fireRate);
         }
+
         fireRoutine = null;
     }
 }
+```

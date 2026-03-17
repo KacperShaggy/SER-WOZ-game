@@ -1,54 +1,105 @@
+```csharp id = "k9qv2n"
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/**
+ * @class Bullet
+ * @brief Handles bullet movement, targeting, and collision with enemies.
+ *
+ * The bullet moves in a specified direction and checks for nearby enemies.
+ * When an enemy is within a hit radius, the bullet deals damage and destroys itself.
+ */
 public class Bullet : MonoBehaviour
 {
-    public float speed = 8f;
-    public float damage = 40f;
-    public Vector3 direction;
+    /** @brief Movement speed of the bullet */
+    [SerializeField]
+    private float speed = 8f;
 
+    /** @brief Damage dealt to the enemy on hit */
+    [SerializeField]
+    private float damage = 40f;
 
-    public void SetDirectionTo(Transform _target)
+    /** @brief Normalized direction vector of the bullet */
+    private Vector3 direction;
+
+    /**
+     * @brief Sets bullet direction toward a target transform.
+     *
+     * @param target Transform of the target enemy
+     */
+    public void SetDirectionTo(Transform target)
     {
-        direction = new Vector3(_target.position.x - transform.position.x,0, _target.position.z - transform.position.z).normalized;
-    }
-    public void SetDirection(Vector3 _direction)
-    {
-        direction = (_direction).normalized;
+        Vector3 dir = target.position - transform.position;
+        dir.y = 0f;
+        direction = dir.normalized;
     }
 
+    /**
+     * @brief Sets bullet direction manually.
+     *
+     * @param newDirection Direction vector
+     */
+    public void SetDirection(Vector3 newDirection)
+    {
+        direction = newDirection.normalized;
+    }
+
+    /**
+     * @brief Unity Start method.
+     *
+     * Automatically destroys the bullet after 3 seconds.
+     */
     private void Start()
     {
-        Destroy(gameObject, 3);
+        Destroy(gameObject, 3f);
     }
-    void Update()
-    {
 
+    /**
+     * @brief Called once per frame.
+     *
+     * Moves the bullet forward and checks for nearby enemies to hit.
+     */
+    private void Update()
+    {
         float distanceThisFrame = speed * Time.deltaTime;
 
+        // Find all enemies in the scene (not optimal for performance)
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach (GameObject enemy in enemies)
         {
-            if (enemy != null)
+            if (enemy == null) continue;
+
+            Vector3 directionToEnemy = enemy.transform.position - transform.position;
+            directionToEnemy.y = 0f;
+
+            // Check if enemy is within hit range
+            if (directionToEnemy.magnitude <= 1f)
             {
-                Vector3 directionToEnemy = new Vector3(enemy.transform.position.x, transform.position.y, enemy.transform.position.z)  - transform.position;
-                if (directionToEnemy.magnitude <= 1)
-                {
-                    HitTarget(enemy);
-                    return;
-                }
+                HitTarget(enemy);
+                return;
             }
         }
+
+        // Move bullet forward
         transform.Translate(direction * distanceThisFrame, Space.World);
     }
 
-    void HitTarget(GameObject target)
+    /**
+     * @brief Applies damage to the target and destroys the bullet.
+     *
+     * @param target Enemy GameObject hit by the bullet
+     */
+    private void HitTarget(GameObject target)
     {
         Enemy enemy = target.GetComponent<Enemy>();
-        enemy.TakeDamage(damage);
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damage);
+        }
 
         Destroy(gameObject);
     }
 }
+```

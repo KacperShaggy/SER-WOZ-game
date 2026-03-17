@@ -1,84 +1,145 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+```csharp id = "p7x2kd"
 using UnityEngine;
 
+/**
+ * @class MapGenerating
+ * @brief Responsible for generating rows of ground tiles based on camera view.
+ *
+ * This class dynamically creates ground rows that fill the visible area of the camera.
+ * Each row consists of multiple nodes (tiles), including special tiles like rails.
+ */
 public class MapGenerating : MonoBehaviour
 {
-    public GameObject NodePrefab;
-    public GameObject RailsPrefab;
-    public GameObject RailsNodePrefab;
-    public GameObject NextToRailsPrefab;
+    /** @brief Default ground tile prefab */
+    [SerializeField]
+    private GameObject nodePrefab;
 
+    /** @brief Rails object prefab */
+    [SerializeField]
+    private GameObject railsPrefab;
+
+    /** @brief Special node with rails */
+    [SerializeField]
+    private GameObject railsNodePrefab;
+
+    /** @brief Node next to rails */
+    [SerializeField]
+    private GameObject nextToRailsPrefab;
+
+    /** @brief Size of a single node (tile) */
+    [SerializeField]
     private float nodeSize = 2f;
-    private int additionNodeOffset = 2; // Dodatkowe wêz³y po ka¿dej stronie, aby zapewniæ pe³ne pokrycie
 
-    // Start is called before the first frame update
-    void Start()
+    /** @brief Extra nodes added on each side to ensure full coverage */
+    [SerializeField]
+    private int additionalNodeOffset = 2;
+
+    /**
+     * @brief Unity Start method.
+     *
+     * Generates the initial ground row.
+     */
+    private void Start()
     {
         CreateGroundRow();
     }
 
-    private Vector3 PointFromCamera(Vector2 camera2DPos)
+    /**
+     * @brief Converts viewport coordinates to a world position on the ground plane.
+     *
+     * @param viewportPos 2D position in viewport space (0–1)
+     * @return World position where the ray intersects the ground plane
+     */
+    private Vector3 PointFromCamera(Vector2 viewportPos)
     {
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero); // Y = 0, to mog³o by byæ poza scopem
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(camera2DPos.x, camera2DPos.y, 0f)); // lewy górny róg
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(viewportPos.x, viewportPos.y, 0f));
 
-        float distance;
-
-        if (groundPlane.Raycast(ray, out distance))
+        if (groundPlane.Raycast(ray, out float distance))
         {
-            Vector3 hitPoint = ray.GetPoint(distance);
-            return hitPoint;
+            return ray.GetPoint(distance);
         }
-        return Vector3.zero; // Zwraca zero, jeœli promieñ nie przecina p³aszczyzny
+
+        return Vector3.zero;
     }
 
+    /**
+     * @brief Creates a new row of ground tiles.
+     *
+     * The row width is based on camera view. It includes:
+     * - center rail node
+     * - adjacent special tiles
+     * - standard ground tiles
+     *
+     * Also attaches movement logic via GroundRow component.
+     */
     public void CreateGroundRow()
     {
-        float WidthDistance = Vector3.Distance(PointFromCamera(new Vector2(0, 1)), PointFromCamera(new Vector2(1, 1)));
-        float HeightDistance = Vector3.Distance(PointFromCamera(new Vector2(0, 0)), PointFromCamera(new Vector2(0, 1)));
+        // Calculate visible area dimensions
+        float widthDistance = Vector3.Distance(
+            PointFromCamera(new Vector2(0f, 1f)),
+            PointFromCamera(new Vector2(1f, 1f))
+        );
 
-        int nodeNumber = (int)(WidthDistance/2/nodeSize) + additionNodeOffset;
-        float nodeTravelDistnace = HeightDistance + 2 * additionNodeOffset * nodeSize;
+        float heightDistance = Vector3.Distance(
+            PointFromCamera(new Vector2(0f, 0f)),
+            PointFromCamera(new Vector2(0f, 1f))
+        );
 
+        int nodeCount = (int)(widthDistance / 2f / nodeSize) + additionalNodeOffset;
+        float travelDistance = heightDistance + 2f * additionalNodeOffset * nodeSize;
+
+        // Create parent object
         GameObject groundRow = new GameObject("GroundRow");
 
+        // Attach movement script
         GroundRow groundRowScript = groundRow.AddComponent<GroundRow>();
-        groundRowScript.speed = 5f;
-        groundRowScript.mapGenerating = this;
-        groundRowScript.distanceToTravel = nodeTravelDistnace;
+        groundRowScript.SetDependencies(this, 5f, travelDistance);
 
-        groundRow.transform.position = transform.position + new Vector3(0,0, HeightDistance/2 + additionNodeOffset * nodeSize);
+        // Position row in front of camera
+        groundRow.transform.position = transform.position +
+            new Vector3(0f, 0f, heightDistance / 2f + additionalNodeOffset * nodeSize);
 
-
-        for (int i = -nodeNumber; i <= nodeNumber; i++)
+        // Generate tiles
+        for (int i = -nodeCount; i <= nodeCount; i++)
         {
-            GameObject node;
-            if (i==0)
-            {
-                node = Instantiate(RailsNodePrefab, groundRow.transform.position + new Vector3(i * nodeSize, 0, 0), RailsNodePrefab.transform.rotation);
-            }
-            else if(i == -1 || i == 1)
-            {
-                float rotation = 0;
-                if (i == 1)
-                    rotation = 180;
+            GameObject nodePrefabToUse;
+            Quaternion rotation = Quaternion.identity;
 
-                node = Instantiate(NextToRailsPrefab, groundRow.transform.position + new Vector3(i * nodeSize, 0, 0), NextToRailsPrefab.transform.rotation * Quaternion.Euler(0f, 0f, rotation));
+            if (i == 0)
+            {
+                nodePrefabToUse = railsNodePrefab;
+            }
+            else if (i == -1 || i == 1)
+            {
+                nodePrefabToUse = nextToRailsPrefab;
+
+                if (i == 1)
+                {
+                    rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
             }
             else
             {
-                node = Instantiate(NodePrefab, groundRow.transform.position + new Vector3(i * nodeSize, 0, 0), NodePrefab.transform.rotation);
+                nodePrefabToUse = nodePrefab;
             }
-            node.transform.parent = groundRow.transform;
 
+            GameObject node = Instantiate(
+                nodePrefabToUse,
+                groundRow.transform.position + new Vector3(i * nodeSize, 0f, 0f),
+                nodePrefabToUse.transform.rotation * rotation
+            );
+
+            node.transform.SetParent(groundRow.transform);
         }
 
-        GameObject rails = Instantiate(RailsPrefab);
-        rails.transform.position = groundRow.transform.position + new Vector3(0, 1.1f, 0);
-        rails.transform.parent = groundRow.transform;
+        // Add rails object
+        GameObject rails = Instantiate(railsPrefab);
+        rails.transform.position = groundRow.transform.position + new Vector3(0f, 1.1f, 0f);
+        rails.transform.SetParent(groundRow.transform);
 
-        groundRow.transform.parent = transform;
+        // Parent to generator
+        groundRow.transform.SetParent(transform);
     }
 }
+```
